@@ -1,7 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
-import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'models/config.dart';
@@ -51,7 +49,5 @@ class ConfigService {
       '  ',
     ).convert(config.toJson());
     await file.writeAsString(jsonString, flush: true);
-
-    debugPrint('Config saved to: ${file.path}');
   }
 }

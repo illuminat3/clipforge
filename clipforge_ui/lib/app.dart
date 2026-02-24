@@ -1,25 +1,22 @@
+import 'package:clipforge_ui/config/models/config.dart';
+import 'package:clipforge_ui/theme/theme.dart';
 import 'package:flutter/material.dart';
-import 'config/config_service.dart';
-
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  final configService = ConfigService();
-  final config = await configService.load();
-
-  debugPrint('Config loaded:');
-  debugPrint(config.toJson().toString());
-  await configService.save(config);
-  runApp(const App());
-}
 
 class App extends StatelessWidget {
-  const App({super.key});
+  final Config config;
+
+  const App({super.key, required this.config});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(body: Center(child: Text('ClipForge Bootstrapped'))),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+
+      theme: LightTheme.theme,
+      darkTheme: DarkTheme.theme,
+      themeMode: config.themeConfig.themeMode,
+
+      home: const Scaffold(body: Center(child: Text('ClipForge Bootstrapped'))),
     );
   }
 }
