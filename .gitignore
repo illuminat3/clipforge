@@ -2,17 +2,10 @@
 # Rust
 # =========================
 
-# Build output
-/target/
-
-# Remove Cargo.lock from libraries (keep for binaries if needed)
-Cargo.lock
-
-# Rustfmt backups
+**/target/
+**/Cargo.lock
 **/*.rs.bk
-
-# Rust analyzer
-.rust-analyzer/
+**/.rust-analyzer/
 
 # =========================
 # Miscellaneous
@@ -25,12 +18,8 @@ Cargo.lock
 *.swp
 .buildlog/
 .history
-
-# OS files
 .DS_Store
 Thumbs.db
-
-# Temp
 *.tmp
 *.swo
 
@@ -38,57 +27,57 @@ Thumbs.db
 # Flutter repo-specific
 # =========================
 
-/bin/cache/
-/bin/internal/bootstrap.bat
-/bin/internal/bootstrap.sh
-/bin/mingit/
-/dev/benchmarks/mega_gallery/
-/dev/bots/.recipe_deps
-/dev/bots/android_tools/
-/dev/devicelab/ABresults*.json
-/dev/docs/doc/
-/dev/docs/flutter.docs.zip
-/dev/docs/lib/
-/dev/docs/pubspec.yaml
-/dev/integration_tests/**/xcuserdata
-/dev/integration_tests/**/Pods
-/packages/flutter/coverage/
-version
-analysis_benchmark.json
+**/bin/cache/
+**/bin/internal/bootstrap.bat
+**/bin/internal/bootstrap.sh
+**/bin/mingit/
+**/dev/benchmarks/mega_gallery/
+**/dev/bots/.recipe_deps
+**/dev/bots/android_tools/
+**/dev/devicelab/ABresults*.json
+**/dev/docs/doc/
+**/dev/docs/flutter.docs.zip
+**/dev/docs/lib/
+**/dev/docs/pubspec.yaml
+**/dev/integration_tests/**/xcuserdata
+**/dev/integration_tests/**/Pods
+**/packages/flutter/coverage/
+**/version
+**/analysis_benchmark.json
 
-.packages.generated
+**/.packages.generated
 
 # =========================
 # Flutter / Dart / Pub
 # =========================
 
 **/doc/api/
-.dart_tool/
-.flutter-plugins
-.flutter-plugins-dependencies
+**/.dart_tool/
+**/.flutter-plugins
+**/.flutter-plugins-dependencies
 **/generated_plugin_registrant.dart
-.packages
-.pub-preload-cache/
-.pub/
-build/
-flutter_*.png
-linked_*.ds
-unlinked.ds
-unlinked_spec.ds
+**/.packages
+**/.pub-preload-cache/
+**/.pub/
+**/build/
+**/flutter_*.png
+**/linked_*.ds
+**/unlinked.ds
+**/unlinked_spec.ds
 
 # =========================
 # Android
 # =========================
 
 **/android/**/gradle-wrapper.jar
-.gradle/
+**/.gradle/
 **/android/captures/
 **/android/gradlew
 **/android/gradlew.bat
 **/android/local.properties
 **/android/**/GeneratedPluginRegistrant.java
 **/android/key.properties
-*.jks
+**/*.jks
 
 # =========================
 # iOS / Xcode
@@ -153,16 +142,16 @@ unlinked_spec.ds
 # Coverage / Profiling
 # =========================
 
-coverage/
-*.prof*
-*.gc*
-*.lcov
+**/coverage/
+**/*.prof*
+**/*.gc*
+**/*.lcov
 
 # =========================
 # Symbols
 # =========================
 
-app.*.symbols
+**/app.*.symbols
 
 # =========================
 # Exceptions
@@ -172,5 +161,5 @@ app.*.symbols
 !**/ios/**/default.mode2v3
 !**/ios/**/default.pbxuser
 !**/ios/**/default.perspectivev3
-!/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
-!/dev/ci/**/Gemfile.lock
+!**/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
+!**/dev/ci/**/Gemfile.lock
