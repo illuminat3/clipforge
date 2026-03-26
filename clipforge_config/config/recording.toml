@@ -1,0 +1,3 @@
+fps = 60
+bitrate_kbps = 16000
+buffer_seconds = 300
