@@ -22,3 +22,12 @@ It will then stitch them together.
 The recording button is slightly different.  
 It will start directly saving all raw data from the files that are going into the buffer folder directly into the encoder.  
 Then when the recording button is pressed again it will save the encoders buffer into the storage folder.
+
+The capture and encoding side will be orchestrated by the recorder.  
+This will have all the functions that are needed:
+
+- start()
+- stop()
+- clip()
+- start_recording()
+- stop_recording()
