@@ -2,7 +2,7 @@ use serde::Deserialize;
 
 use super::ConfigLoader;
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, Clone)]
 pub struct StorageConfig {
     pub storage_path: String,
     pub buffer_path: String,
