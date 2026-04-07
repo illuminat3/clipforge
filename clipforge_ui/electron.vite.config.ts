@@ -8,9 +8,17 @@ export default defineConfig({
   renderer: {
     resolve: {
       alias: {
-        '@renderer': resolve('src/renderer/src')
-      }
+        '@renderer': resolve('src/renderer/src'),
+      },
     },
-    plugins: [vue()]
-  }
+    plugins: [vue()],
+    css: {
+      preprocessorOptions: {
+        scss: {
+          // Silence legacy API deprecation warnings from dependencies
+          silenceDeprecations: ['legacy-js-api'],
+        },
+      },
+    },
+  },
 })

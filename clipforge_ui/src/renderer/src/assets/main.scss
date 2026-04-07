@@ -1,0 +1,91 @@
+// clipforge — Discord-inspired dark theme (slightly darker than Discord defaults)
+:root {
+  --surface:          #28292f;   // main content background
+  --surface-raised:   #222428;   // elevated panels, header, modals
+  --surface-overlay:  #2d2f38;   // inputs, hover overlays
+  --surface-border:   #3c3f4d;   // borders and dividers
+
+  --accent:           #4a55e0;   // primary action (darker Discord blurple)
+  --accent-hover:     #3d47d0;
+
+  --text-100: #f3f3f5;
+  --text-200: #dcddde;
+  --text-300: #8e9297;
+  --text-400: #5d6169;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  font-weight: normal;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+  overflow: hidden;
+  background: var(--surface);
+  color: var(--text-200);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 0;
+
+  &:active {
+    transform: none;
+  }
+}
+
+input,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+video {
+  outline: none;
+}
+
+// Custom scrollbars
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--surface-border);
+  border-radius: 3px;
+
+  &:hover {
+    background: var(--text-400);
+  }
+}
+
+// Drag-safe — used on timeline and any drag surface
+.no-select {
+  user-select: none;
+  -webkit-user-select: none;
+}
