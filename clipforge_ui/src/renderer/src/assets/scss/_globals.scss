@@ -1,0 +1,12 @@
+@use 'abstracts' as *;
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  background-color: $color-primary-background;
+  font-family: 'Lato', sans-serif;
+  color: $color-primary-text;
+}

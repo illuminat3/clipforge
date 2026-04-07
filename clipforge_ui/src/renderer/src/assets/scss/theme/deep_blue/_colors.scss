@@ -1,0 +1,64 @@
+// ============================================================
+// Theme: Deep Blue
+// True deep ocean dark — near-black base, steel-blue surfaces,
+// pale sky accents
+// ============================================================
+
+// --- Raw palette ---
+$pale-sky: #cadde2ff;
+$sky-blue-light: #8ec0cdff;
+$pacific-blue: #659dabff;
+$pacific-cyan: #518c9aff;
+$cerulean: #3c7a89ff;
+$blue-slate: #356170ff;
+$charcoal-blue: #2e4756ff;
+$jet-black: #223742ff;
+$jet-black-2: #16262eff;
+$ink-black: #101618ff;
+
+// --- Backgrounds ---
+$default-color-primary-background: #0a1014;
+$default-color-secondary-background: $ink-black;
+$default-color-tertiary-background: $jet-black-2;
+
+// --- Surfaces / Cards ---
+$default-color-surface: $jet-black;
+$default-color-surface-hover: $charcoal-blue;
+$default-color-surface-active: $blue-slate;
+
+// --- Borders ---
+$default-color-border: $charcoal-blue;
+$default-color-border-subtle: #131e25;
+$default-color-border-focus: $sky-blue-light;
+
+// --- Text ---
+$default-color-primary-text: $pale-sky;
+$default-color-secondary-text: $pacific-blue;
+$default-color-tertiary-text: $cerulean;
+
+// --- Accent / Brand ---
+$default-color-accent: $sky-blue-light;
+$default-color-accent-hover: $pale-sky;
+$default-color-accent-muted: rgba(#8ec0cd, 0.15);
+
+// --- Semantic ---
+$default-color-success: #3dbf8a;
+$default-color-warning: #d4a843;
+$default-color-error: #d95f6e;
+$default-color-info: $pacific-cyan;
+
+// --- Interactive ---
+$default-color-link: $sky-blue-light;
+$default-color-link-hover: $pale-sky;
+$default-color-focus-ring: rgba(#8ec0cd, 0.4);
+
+// --- Scrollbar ---
+$default-color-scrollbar-track: $default-color-secondary-background;
+$default-color-scrollbar-thumb: $charcoal-blue;
+$default-color-scrollbar-thumb-hover: $blue-slate;
+
+// --- Shadows ---
+$default-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
+$default-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.6);
+$default-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.75);
+$default-shadow-glow: 0 0 16px rgba(#8ec0cd, 0.2);

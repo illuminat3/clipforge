@@ -1,0 +1,173 @@
+@use '../theme' as theme;
+
+// ============================================================
+// Theme: Deep Blue
+// ============================================================
+:root {
+  --color-primary-background: #{theme.$deep_blue-default-color-primary-background};
+  --color-secondary-background: #{theme.$deep_blue-default-color-secondary-background};
+  --color-tertiary-background: #{theme.$deep_blue-default-color-tertiary-background};
+
+  --color-surface: #{theme.$deep_blue-default-color-surface};
+  --color-surface-hover: #{theme.$deep_blue-default-color-surface-hover};
+  --color-surface-active: #{theme.$deep_blue-default-color-surface-active};
+
+  --color-border: #{theme.$deep_blue-default-color-border};
+  --color-border-subtle: #{theme.$deep_blue-default-color-border-subtle};
+  --color-border-focus: #{theme.$deep_blue-default-color-border-focus};
+
+  --color-primary-text: #{theme.$deep_blue-default-color-primary-text};
+  --color-secondary-text: #{theme.$deep_blue-default-color-secondary-text};
+  --color-tertiary-text: #{theme.$deep_blue-default-color-tertiary-text};
+
+  --color-accent: #{theme.$deep_blue-default-color-accent};
+  --color-accent-hover: #{theme.$deep_blue-default-color-accent-hover};
+  --color-accent-muted: #{theme.$deep_blue-default-color-accent-muted};
+
+  --color-success: #{theme.$deep_blue-default-color-success};
+  --color-warning: #{theme.$deep_blue-default-color-warning};
+  --color-error: #{theme.$deep_blue-default-color-error};
+  --color-info: #{theme.$deep_blue-default-color-info};
+
+  --color-link: #{theme.$deep_blue-default-color-link};
+  --color-link-hover: #{theme.$deep_blue-default-color-link-hover};
+  --color-focus-ring: #{theme.$deep_blue-default-color-focus-ring};
+
+  --color-scrollbar-track: #{theme.$deep_blue-default-color-scrollbar-track};
+  --color-scrollbar-thumb: #{theme.$deep_blue-default-color-scrollbar-thumb};
+  --color-scrollbar-thumb-hover: #{theme.$deep_blue-default-color-scrollbar-thumb-hover};
+
+  --shadow-sm: #{theme.$deep_blue-default-shadow-sm};
+  --shadow-md: #{theme.$deep_blue-default-shadow-md};
+  --shadow-lg: #{theme.$deep_blue-default-shadow-lg};
+  --shadow-glow: #{theme.$deep_blue-default-shadow-glow};
+}
+
+// ============================================================
+// Theme: Mermaid Dream
+// ============================================================
+:root[data-theme='mermaid_dream'] {
+  --color-primary-background: #{theme.$mermaid_dream-default-color-primary-background};
+  --color-secondary-background: #{theme.$mermaid_dream-default-color-secondary-background};
+  --color-tertiary-background: #{theme.$mermaid_dream-default-color-tertiary-background};
+
+  --color-surface: #{theme.$mermaid_dream-default-color-surface};
+  --color-surface-hover: #{theme.$mermaid_dream-default-color-surface-hover};
+  --color-surface-active: #{theme.$mermaid_dream-default-color-surface-active};
+
+  --color-border: #{theme.$mermaid_dream-default-color-border};
+  --color-border-subtle: #{theme.$mermaid_dream-default-color-border-subtle};
+  --color-border-focus: #{theme.$mermaid_dream-default-color-border-focus};
+
+  --color-primary-text: #{theme.$mermaid_dream-default-color-primary-text};
+  --color-secondary-text: #{theme.$mermaid_dream-default-color-secondary-text};
+  --color-tertiary-text: #{theme.$mermaid_dream-default-color-tertiary-text};
+
+  --color-accent: #{theme.$mermaid_dream-default-color-accent};
+  --color-accent-hover: #{theme.$mermaid_dream-default-color-accent-hover};
+  --color-accent-muted: #{theme.$mermaid_dream-default-color-accent-muted};
+
+  --color-success: #{theme.$mermaid_dream-default-color-success};
+  --color-warning: #{theme.$mermaid_dream-default-color-warning};
+  --color-error: #{theme.$mermaid_dream-default-color-error};
+  --color-info: #{theme.$mermaid_dream-default-color-info};
+
+  --color-link: #{theme.$mermaid_dream-default-color-link};
+  --color-link-hover: #{theme.$mermaid_dream-default-color-link-hover};
+  --color-focus-ring: #{theme.$mermaid_dream-default-color-focus-ring};
+
+  --color-scrollbar-track: #{theme.$mermaid_dream-default-color-scrollbar-track};
+  --color-scrollbar-thumb: #{theme.$mermaid_dream-default-color-scrollbar-thumb};
+  --color-scrollbar-thumb-hover: #{theme.$mermaid_dream-default-color-scrollbar-thumb-hover};
+
+  --shadow-sm: #{theme.$mermaid_dream-default-shadow-sm};
+  --shadow-md: #{theme.$mermaid_dream-default-shadow-md};
+  --shadow-lg: #{theme.$mermaid_dream-default-shadow-lg};
+  --shadow-glow: #{theme.$mermaid_dream-default-shadow-glow};
+}
+
+// ============================================================
+// Theme: Pink Delight
+// ============================================================
+:root[data-theme='pink_delight'] {
+  --color-primary-background: #{theme.$pink_delight-default-color-primary-background};
+  --color-secondary-background: #{theme.$pink_delight-default-color-secondary-background};
+  --color-tertiary-background: #{theme.$pink_delight-default-color-tertiary-background};
+
+  --color-surface: #{theme.$pink_delight-default-color-surface};
+  --color-surface-hover: #{theme.$pink_delight-default-color-surface-hover};
+  --color-surface-active: #{theme.$pink_delight-default-color-surface-active};
+
+  --color-border: #{theme.$pink_delight-default-color-border};
+  --color-border-subtle: #{theme.$pink_delight-default-color-border-subtle};
+  --color-border-focus: #{theme.$pink_delight-default-color-border-focus};
+
+  --color-primary-text: #{theme.$pink_delight-default-color-primary-text};
+  --color-secondary-text: #{theme.$pink_delight-default-color-secondary-text};
+  --color-tertiary-text: #{theme.$pink_delight-default-color-tertiary-text};
+
+  --color-accent: #{theme.$pink_delight-default-color-accent};
+  --color-accent-hover: #{theme.$pink_delight-default-color-accent-hover};
+  --color-accent-muted: #{theme.$pink_delight-default-color-accent-muted};
+
+  --color-success: #{theme.$pink_delight-default-color-success};
+  --color-warning: #{theme.$pink_delight-default-color-warning};
+  --color-error: #{theme.$pink_delight-default-color-error};
+  --color-info: #{theme.$pink_delight-default-color-info};
+
+  --color-link: #{theme.$pink_delight-default-color-link};
+  --color-link-hover: #{theme.$pink_delight-default-color-link-hover};
+  --color-focus-ring: #{theme.$pink_delight-default-color-focus-ring};
+
+  --color-scrollbar-track: #{theme.$pink_delight-default-color-scrollbar-track};
+  --color-scrollbar-thumb: #{theme.$pink_delight-default-color-scrollbar-thumb};
+  --color-scrollbar-thumb-hover: #{theme.$pink_delight-default-color-scrollbar-thumb-hover};
+
+  --shadow-sm: #{theme.$pink_delight-default-shadow-sm};
+  --shadow-md: #{theme.$pink_delight-default-shadow-md};
+  --shadow-lg: #{theme.$pink_delight-default-shadow-lg};
+  --shadow-glow: #{theme.$pink_delight-default-shadow-glow};
+}
+
+// ============================================================
+// Theme: Red Sunset
+// ============================================================
+:root[data-theme='red_sunset'] {
+  --color-primary-background: #{theme.$red_sunset-default-color-primary-background};
+  --color-secondary-background: #{theme.$red_sunset-default-color-secondary-background};
+  --color-tertiary-background: #{theme.$red_sunset-default-color-tertiary-background};
+
+  --color-surface: #{theme.$red_sunset-default-color-surface};
+  --color-surface-hover: #{theme.$red_sunset-default-color-surface-hover};
+  --color-surface-active: #{theme.$red_sunset-default-color-surface-active};
+
+  --color-border: #{theme.$red_sunset-default-color-border};
+  --color-border-subtle: #{theme.$red_sunset-default-color-border-subtle};
+  --color-border-focus: #{theme.$red_sunset-default-color-border-focus};
+
+  --color-primary-text: #{theme.$red_sunset-default-color-primary-text};
+  --color-secondary-text: #{theme.$red_sunset-default-color-secondary-text};
+  --color-tertiary-text: #{theme.$red_sunset-default-color-tertiary-text};
+
+  --color-accent: #{theme.$red_sunset-default-color-accent};
+  --color-accent-hover: #{theme.$red_sunset-default-color-accent-hover};
+  --color-accent-muted: #{theme.$red_sunset-default-color-accent-muted};
+
+  --color-success: #{theme.$red_sunset-default-color-success};
+  --color-warning: #{theme.$red_sunset-default-color-warning};
+  --color-error: #{theme.$red_sunset-default-color-error};
+  --color-info: #{theme.$red_sunset-default-color-info};
+
+  --color-link: #{theme.$red_sunset-default-color-link};
+  --color-link-hover: #{theme.$red_sunset-default-color-link-hover};
+  --color-focus-ring: #{theme.$red_sunset-default-color-focus-ring};
+
+  --color-scrollbar-track: #{theme.$red_sunset-default-color-scrollbar-track};
+  --color-scrollbar-thumb: #{theme.$red_sunset-default-color-scrollbar-thumb};
+  --color-scrollbar-thumb-hover: #{theme.$red_sunset-default-color-scrollbar-thumb-hover};
+
+  --shadow-sm: #{theme.$red_sunset-default-shadow-sm};
+  --shadow-md: #{theme.$red_sunset-default-shadow-md};
+  --shadow-lg: #{theme.$red_sunset-default-shadow-lg};
+  --shadow-glow: #{theme.$red_sunset-default-shadow-glow};
+}

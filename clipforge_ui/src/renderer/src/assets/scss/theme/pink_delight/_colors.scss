@@ -1,0 +1,58 @@
+// ============================================================
+// Theme: Pink Delight
+// Dark charcoal base with rose-pink accents — dark mode blush
+// ============================================================
+
+// --- Raw palette ---
+$soft-blush: #ffe5ecff;
+$pastel-pink: #ffc2d1ff;
+$cherry-blossom: #ffb3c6ff;
+$cotton-candy: #ff8fabff;
+$petal-rouge: #fb6f92ff;
+
+// --- Backgrounds ---
+$default-color-primary-background: #140d10;
+$default-color-secondary-background: #1e1218;
+$default-color-tertiary-background: #261720;
+
+// --- Surfaces / Cards ---
+$default-color-surface: #301d26;
+$default-color-surface-hover: #3c2431;
+$default-color-surface-active: #4a2b3c;
+
+// --- Borders ---
+$default-color-border: #5a2d40;
+$default-color-border-subtle: #1e1218;
+$default-color-border-focus: $petal-rouge;
+
+// --- Text ---
+$default-color-primary-text: #ffedf2;
+$default-color-secondary-text: #d4829a;
+$default-color-tertiary-text: #8a4d60;
+
+// --- Accent / Brand ---
+$default-color-accent: $petal-rouge;
+$default-color-accent-hover: $cotton-candy;
+$default-color-accent-muted: rgba(#fb6f92, 0.15);
+
+// --- Semantic ---
+$default-color-success: #66c68a;
+$default-color-warning: #f4c76a;
+$default-color-error: #e0435a;
+$default-color-info: #7ab8e8;
+
+// --- Interactive ---
+$default-color-link: $cotton-candy;
+$default-color-link-hover: $soft-blush;
+$default-color-focus-ring: rgba(#fb6f92, 0.45);
+
+// --- Scrollbar ---
+$default-color-scrollbar-track: $default-color-secondary-background;
+$default-color-scrollbar-thumb: #5a2d40;
+$default-color-scrollbar-thumb-hover: $petal-rouge;
+
+// --- Shadows ---
+$default-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.45);
+$default-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.55);
+$default-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.65);
+$default-shadow-glow: 0 0 18px rgba(#fb6f92, 0.25);

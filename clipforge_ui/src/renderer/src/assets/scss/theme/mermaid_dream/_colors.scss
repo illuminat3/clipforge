@@ -1,0 +1,63 @@
+// ============================================================
+// Theme: Mermaid Dream
+// Deep teal-to-navy dark theme with cyan accents
+// ============================================================
+
+// --- Raw palette ---
+$strong-cyan: #3fc1c0ff;
+$tropical-teal: #20bac5ff;
+$pacific-blue: #00b2caff;
+$turquoise-surf: #04a6c2ff;
+$blue-green: #0899baff;
+$cerulean: #0f80aaff;
+$baltic-blue: #16679aff;
+$baltic-blue-2: #1a5b92ff;
+$dusk-blue: #1c558eff;
+$dusk-blue-2: #1d4e89ff;
+
+// --- Backgrounds ---
+$default-color-primary-background: #0d1f2d;
+$default-color-secondary-background: #122436;
+$default-color-tertiary-background: #1a3348;
+
+// --- Surfaces / Cards ---
+$default-color-surface: #1e3d56;
+$default-color-surface-hover: #254a66;
+$default-color-surface-active: #2b5575;
+
+// --- Borders ---
+$default-color-border: #1c558e;
+$default-color-border-subtle: #16273a;
+$default-color-border-focus: #3fc1c0;
+
+// --- Text ---
+$default-color-primary-text: #e8f6f8;
+$default-color-secondary-text: #8ecad6;
+$default-color-tertiary-text: #4f8fa0;
+
+// --- Accent / Brand ---
+$default-color-accent: $strong-cyan;
+$default-color-accent-hover: $tropical-teal;
+$default-color-accent-muted: rgba(#3fc1c0, 0.15);
+
+// --- Semantic ---
+$default-color-success: #2dd4a0;
+$default-color-warning: #f4a836;
+$default-color-error: #e05c6e;
+$default-color-info: $pacific-blue;
+
+// --- Interactive ---
+$default-color-link: $strong-cyan;
+$default-color-link-hover: $tropical-teal;
+$default-color-focus-ring: rgba(#3fc1c0, 0.45);
+
+// --- Scrollbar ---
+$default-color-scrollbar-track: $default-color-secondary-background;
+$default-color-scrollbar-thumb: $baltic-blue;
+$default-color-scrollbar-thumb-hover: $cerulean;
+
+// --- Shadows ---
+$default-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+$default-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+$default-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.6);
+$default-shadow-glow: 0 0 16px rgba(#3fc1c0, 0.25);

@@ -1,0 +1,63 @@
+// ============================================================
+// Theme: Red Sunset
+// Pitch-black base, ember reds, molten orange-amber accents
+// ============================================================
+
+// --- Raw palette ---
+$ink-black: #03071eff;
+$night-bordeaux: #370617ff;
+$black-cherry: #6a040fff;
+$oxblood: #9d0208ff;
+$brick-ember: #d00000ff;
+$red-ochre: #dc2f02ff;
+$cayenne-red: #e85d04ff;
+$deep-saffron: #f48c06ff;
+$orange: #faa307ff;
+$amber-flame: #ffba08ff;
+
+// --- Backgrounds ---
+$default-color-primary-background: #060209;
+$default-color-secondary-background: #0e0510;
+$default-color-tertiary-background: #1a0a0a;
+
+// --- Surfaces / Cards ---
+$default-color-surface: #260a0a;
+$default-color-surface-hover: #361010;
+$default-color-surface-active: #4a1212;
+
+// --- Borders ---
+$default-color-border: #6a040f;
+$default-color-border-subtle: #1e0808;
+$default-color-border-focus: $cayenne-red;
+
+// --- Text ---
+$default-color-primary-text: #fff1e0;
+$default-color-secondary-text: #c9855a;
+$default-color-tertiary-text: #7a4030;
+
+// --- Accent / Brand ---
+$default-color-accent: $cayenne-red;
+$default-color-accent-hover: $deep-saffron;
+$default-color-accent-muted: rgba(#e85d04, 0.15);
+
+// --- Semantic ---
+$default-color-success: #4caf82;
+$default-color-warning: $amber-flame;
+$default-color-error: $brick-ember;
+$default-color-info: #5b9bd5;
+
+// --- Interactive ---
+$default-color-link: $deep-saffron;
+$default-color-link-hover: $amber-flame;
+$default-color-focus-ring: rgba(#e85d04, 0.45);
+
+// --- Scrollbar ---
+$default-color-scrollbar-track: $default-color-secondary-background;
+$default-color-scrollbar-thumb: $black-cherry;
+$default-color-scrollbar-thumb-hover: $oxblood;
+
+// --- Shadows ---
+$default-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
+$default-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.65);
+$default-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.75);
+$default-shadow-glow: 0 0 20px rgba(#e85d04, 0.3);
