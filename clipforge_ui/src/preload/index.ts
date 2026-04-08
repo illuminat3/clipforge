@@ -1,16 +1,31 @@
-import { contextBridge } from 'electron'
+import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 
-// Custom APIs for renderer
-const api = {}
+const clipforgeAPI = {
+  settings: {
+    get: (): Promise<Record<string, string>> => ipcRenderer.invoke('settings:get'),
+    set: (key: string, value: string): Promise<void> => ipcRenderer.invoke('settings:set', key, value),
+    selectDirectory: (defaultPath?: string): Promise<string | null> =>
+      ipcRenderer.invoke('settings:selectDirectory', defaultPath),
+    selectFile: (defaultPath?: string): Promise<string | null> =>
+      ipcRenderer.invoke('settings:selectFile', defaultPath)
+  },
+  clips: {
+    list: (directory: string) => ipcRenderer.invoke('clips:list', directory),
+    getMetadata: (filePath: string) => ipcRenderer.invoke('clips:getMetadata', filePath),
+    getThumbnail: (filePath: string) => ipcRenderer.invoke('clips:getThumbnail', filePath),
+    save: (args: { inputPath: string; segments: { start: number; end: number }[]; outputPath: string }) =>
+      ipcRenderer.invoke('clips:save', args),
+    saveDialog: (defaultPath?: string) => ipcRenderer.invoke('clips:saveDialog', defaultPath),
+    delete: (filePath: string) => ipcRenderer.invoke('clips:delete', filePath),
+    openFileLocation: (filePath: string) => ipcRenderer.invoke('clips:openFileLocation', filePath)
+  }
+}
 
-// Use `contextBridge` APIs to expose Electron APIs to
-// renderer only if context isolation is enabled, otherwise
-// just add to the DOM global.
 if (process.contextIsolated) {
   try {
     contextBridge.exposeInMainWorld('electron', electronAPI)
-    contextBridge.exposeInMainWorld('api', api)
+    contextBridge.exposeInMainWorld('electronAPI', clipforgeAPI)
   } catch (error) {
     console.error(error)
   }
@@ -18,5 +33,5 @@ if (process.contextIsolated) {
   // @ts-ignore (define in dts)
   window.electron = electronAPI
   // @ts-ignore (define in dts)
-  window.api = api
+  window.electronAPI = clipforgeAPI
 }

@@ -23,13 +23,17 @@
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.2",
     "@electron-toolkit/utils": "^4.0.0",
+    "electron-store": "^8.1.0",
     "electron-updater": "^6.3.9",
+    "fluent-ffmpeg": "^2.1.2",
+    "lucide-vue-next": "^0.513.0",
     "vue-router": "^5.0.4"
   },
   "devDependencies": {
     "@electron-toolkit/eslint-config-prettier": "3.0.0",
     "@electron-toolkit/eslint-config-ts": "^3.1.0",
     "@electron-toolkit/tsconfig": "^2.0.0",
+    "@types/fluent-ffmpeg": "^2.1.27",
     "@types/node": "^22.19.1",
     "@vitejs/plugin-vue": "^6.0.2",
     "electron": "^39.2.6",
@@ -38,6 +42,7 @@
     "eslint": "^9.39.1",
     "eslint-plugin-vue": "^10.6.2",
     "prettier": "^3.7.4",
+    "sass": "^1.89.0",
     "typescript": "^5.9.3",
     "vite": "^7.2.6",
     "vue": "^3.5.25",
