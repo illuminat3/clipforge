@@ -9,14 +9,16 @@ namespace clipforge_api.Auth.Register
         {
             var existingUser = db.Users.FirstOrDefault(u => u.Username == request.Username);
             if (existingUser != null)
+            {
                 throw new InvalidOperationException("Username already taken.");
+            }
 
             var user = new User
             {
                 Id = Guid.NewGuid(),
                 Username = request.Username,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
-                StorageLimitBytes = 10L * 1024 * 1024 * 1024, // 10 GB default
+                StorageLimitBytes = 500L * 1024 * 1024,
                 CreatedAt = DateTime.UtcNow,
             };
 
