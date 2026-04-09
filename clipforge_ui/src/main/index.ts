@@ -294,7 +294,12 @@ ipcMain.handle(
         command
           .setStartTime(seg.start)
           .setDuration(seg.end - seg.start)
-          .outputOptions(['-c copy', '-avoid_negative_ts make_zero', '-movflags +faststart'])
+          .outputOptions([
+            '-c:v libx264',
+            '-c:a aac',
+            '-avoid_negative_ts make_zero',
+            '-movflags +faststart'
+          ])
           .output(outputPath)
           .on('error', (err) => resolve({ success: false, error: err.message }))
           .on('end', () => resolve({ success: true, outputPath }))
