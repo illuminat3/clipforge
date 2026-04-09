@@ -1,35 +1,37 @@
-﻿using clipforge_api.Clip.Publish;
+﻿using clipforge_api.Clip.PublishClip;
 using clipforge_api.Clip.StreamClip;
 using clipforge_api.Clip.GetClip;
 using clipforge_api.Core;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace clipforge_api.Clip;
-
-[Route("clip")]
-public class ClipController(IMediator mediator) : RequiredAuthController(mediator)
+namespace clipforge_api.Clip
 {
-    [HttpPost("publish")]
-    public async Task<IActionResult> Publish([FromForm] PublishClipCommand command)
-    {
-        var result = await Mediator.Send(command);
-        return Ok(result);
-    }
 
-    [HttpGet("{id}")]
-    public async Task<IActionResult> GetClip(string id)
+    [Route("clip")]
+    public class ClipController(IMediator mediator) : RequiredAuthController(mediator)
     {
-        var query = new GetClipQuery(id);
-        var result = await Mediator.Send(query);
-        return Ok(result);
-    }
+        [HttpPost("publish")]
+        public async Task<IActionResult> Publish([FromForm] PublishClipCommand command)
+        {
+            var result = await Mediator.Send(command);
+            return Ok(result);
+        }
 
-    [HttpGet("{id}/stream")]
-    public async Task<IActionResult> StreamClip(string id, [FromQuery] string? rangeHeader)
-    { 
-        var query = new StreamClipQuery(id, rangeHeader);
-        var result = await Mediator.Send(query);
-        return result;
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetClip(string id)
+        {
+            var query = new GetClipQuery(id);
+            var result = await Mediator.Send(query);
+            return Ok(result);
+        }
+
+        [HttpGet("{id}/stream")]
+        public async Task<IActionResult> StreamClip(string id, [FromQuery] string? rangeHeader)
+        {
+            var query = new StreamClipQuery(id, rangeHeader);
+            var result = await Mediator.Send(query);
+            return result;
+        }
     }
 }
