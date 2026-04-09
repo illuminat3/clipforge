@@ -9,11 +9,12 @@
       </div>
 
       <p class="dialog-desc">
-        How would you like to save <strong>{{ clipName }}</strong>?
+        How would you like to save <strong>{{ clipName }}</strong
+        >?
       </p>
 
       <div v-if="error" class="error-banner">
-        <AlertCircle :size="15" style="flex-shrink:0; margin-top:2px" />
+        <AlertCircle :size="15" style="flex-shrink: 0; margin-top: 2px" />
         <span>{{ error }}</span>
       </div>
 
@@ -35,11 +36,7 @@
         </button>
 
         <!-- Save as Copy -->
-        <button
-          :disabled="saving"
-          class="save-option opt-primary"
-          @click="$emit('save', 'copy')"
-        >
+        <button :disabled="saving" class="save-option opt-primary" @click="$emit('save', 'copy')">
           <span class="opt-icon accent-icon">
             <Loader2 v-if="saving" :size="18" class="animate-spin" />
             <Copy v-else :size="18" />
@@ -182,7 +179,9 @@ defineEmits<{
   text-align: left;
   cursor: pointer;
   color: var(--color-primary-text);
-  transition: border-color 0.15s, background 0.15s;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
 }
 
 .save-option:disabled {
@@ -211,9 +210,15 @@ defineEmits<{
   align-items: center;
 }
 
-.accent-icon { color: var(--color-accent); }
-.danger-icon { color: var(--color-error); }
-.muted-icon  { color: var(--color-secondary-text); }
+.accent-icon {
+  color: var(--color-accent);
+}
+.danger-icon {
+  color: var(--color-error);
+}
+.muted-icon {
+  color: var(--color-secondary-text);
+}
 
 .opt-title {
   margin: 0;

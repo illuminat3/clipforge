@@ -52,14 +52,16 @@
           <!-- Left trim handle -->
           <div class="trim-handle left" @mousedown.stop="(e) => handleLeftMouseDown(idx, e)">
             <div class="handle-lines">
-              <div class="h-line" /><div class="h-line" />
+              <div class="h-line" />
+              <div class="h-line" />
             </div>
           </div>
 
           <!-- Right trim handle -->
           <div class="trim-handle right" @mousedown.stop="(e) => handleRightMouseDown(idx, e)">
             <div class="handle-lines">
-              <div class="h-line" /><div class="h-line" />
+              <div class="h-line" />
+              <div class="h-line" />
             </div>
           </div>
         </div>
@@ -107,7 +109,13 @@ const zoom = ref(1)
 
 // Keep a mutable ref for use inside mousedown closures
 let segsSnapshot: EditSegment[] = props.segments
-watch(() => props.segments, (v) => { segsSnapshot = v }, { deep: true, immediate: true })
+watch(
+  () => props.segments,
+  (v) => {
+    segsSnapshot = v
+  },
+  { deep: true, immediate: true }
+)
 
 const clamp = (v: number, lo: number, hi: number): number => Math.max(lo, Math.min(hi, v))
 
@@ -194,9 +202,10 @@ function handleBodyMouseDown(idx: number, e: MouseEvent): void {
     if (!el) return
     const delta = ((ev.clientX - startX) / el.scrollWidth) * totalTimelineDur.value
     const newOffset = Math.max(0, origOffset + delta)
-    emit('change', segsSnapshot.map((s, i) =>
-      i === idx ? { ...s, timelineOffset: newOffset } : s
-    ))
+    emit(
+      'change',
+      segsSnapshot.map((s, i) => (i === idx ? { ...s, timelineOffset: newOffset } : s))
+    )
   }
   const up = (): void => {
     window.removeEventListener('mousemove', move)
@@ -219,9 +228,12 @@ function handleLeftMouseDown(idx: number, e: MouseEvent): void {
     const newStart = clamp(origStart + delta, 0, end - 0.05)
     const actualDelta = newStart - origStart
     const newTLO = Math.max(0, origTLO + actualDelta)
-    emit('change', segsSnapshot.map((s, i) =>
-      i === idx ? { ...s, start: newStart, timelineOffset: newTLO } : s
-    ))
+    emit(
+      'change',
+      segsSnapshot.map((s, i) =>
+        i === idx ? { ...s, start: newStart, timelineOffset: newTLO } : s
+      )
+    )
     emit('seek', newStart)
   }
   const up = (): void => {
@@ -243,9 +255,10 @@ function handleRightMouseDown(idx: number, e: MouseEvent): void {
     if (!el) return
     const delta = ((ev.clientX - startX) / el.scrollWidth) * totalTimelineDur.value
     const newEnd = clamp(origEnd + delta, start + 0.05, props.duration)
-    emit('change', segsSnapshot.map((s, i) =>
-      i === idx ? { ...s, end: newEnd } : s
-    ))
+    emit(
+      'change',
+      segsSnapshot.map((s, i) => (i === idx ? { ...s, end: newEnd } : s))
+    )
     emit('seek', newEnd)
   }
   const up = (): void => {
@@ -311,9 +324,7 @@ function handlePlayheadMouseDown(e: MouseEvent): void {
 // Playhead position
 const playheadTLTime = computed(() => srcToTimelineTime(props.currentTime))
 const playheadPct = computed(() =>
-  playheadTLTime.value !== null
-    ? (playheadTLTime.value / totalTimelineDur.value) * 100
-    : null
+  playheadTLTime.value !== null ? (playheadTLTime.value / totalTimelineDur.value) * 100 : null
 )
 
 // Auto-scroll to keep playhead visible
@@ -378,7 +389,9 @@ function formatRulerTime(s: number): string {
   cursor: pointer;
   display: flex;
   align-items: center;
-  transition: color 0.15s, background 0.15s;
+  transition:
+    color 0.15s,
+    background 0.15s;
 }
 
 .zoom-btn:hover {

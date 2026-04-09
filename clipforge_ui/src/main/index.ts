@@ -7,8 +7,6 @@ import icon from '../../resources/icon.png?asset'
 import Store from 'electron-store'
 import ffmpeg from 'fluent-ffmpeg'
 
-// ─── Settings store ──────────────────────────────────────────────────────────
-
 interface Settings {
   clipsDirectory: string
   outputDirectory: string
@@ -31,8 +29,6 @@ function initStore(): void {
   })
   applyFfmpegPaths()
 }
-
-// ─── FFmpeg resolution ───────────────────────────────────────────────────────
 
 function resolveFfmpegPaths(savedPath: string): string | null {
   const candidates: string[] = []
@@ -65,8 +61,6 @@ function applyFfmpegPaths(): void {
     if (existsSync(ffprobeCand)) ffmpeg.setFfprobePath(ffprobeCand)
   }
 }
-
-// ─── Window ──────────────────────────────────────────────────────────────────
 
 let mainWindow: BrowserWindow
 
@@ -193,9 +187,7 @@ ipcMain.handle('clips:getMetadata', (_, filePath: string) => {
       if (err) return resolve({ error: err.message })
       const videoStream = metadata.streams.find((s) => s.codec_type === 'video')
       const audioStream = metadata.streams.find((s) => s.codec_type === 'audio')
-      const fps = videoStream?.r_frame_rate
-        ? parseFraction(videoStream.r_frame_rate)
-        : null
+      const fps = videoStream?.r_frame_rate ? parseFraction(videoStream.r_frame_rate) : null
       resolve({
         duration: metadata.format.duration,
         size: metadata.format.size,
@@ -275,7 +267,11 @@ ipcMain.handle(
   'clips:save',
   async (
     _,
-    { inputPath, segments, outputPath }: { inputPath: string; segments: SaveSegment[]; outputPath: string }
+    {
+      inputPath,
+      segments,
+      outputPath
+    }: { inputPath: string; segments: SaveSegment[]; outputPath: string }
   ) => {
     return new Promise((resolve) => {
       const outDir = dirname(outputPath)
@@ -283,7 +279,10 @@ ipcMain.handle(
         try {
           mkdirSync(outDir, { recursive: true })
         } catch (e) {
-          return resolve({ success: false, error: `Cannot create output directory: ${(e as Error).message}` })
+          return resolve({
+            success: false,
+            error: `Cannot create output directory: ${(e as Error).message}`
+          })
         }
       }
 
@@ -291,7 +290,7 @@ ipcMain.handle(
         return resolve({ success: false, error: 'No segments to export' })
       }
 
-      let command = ffmpeg(inputPath)
+      const command = ffmpeg(inputPath)
 
       if (segments.length === 1) {
         const seg = segments[0]
@@ -315,9 +314,7 @@ ipcMain.handle(
           concatInputs.push(`[v${i}][a${i}]`)
         })
 
-        filterParts.push(
-          `${concatInputs.join('')}concat=n=${segments.length}:v=1:a=1[vout][aout]`
-        )
+        filterParts.push(`${concatInputs.join('')}concat=n=${segments.length}:v=1:a=1[vout][aout]`)
 
         command
           .complexFilter(filterParts.join(';'))

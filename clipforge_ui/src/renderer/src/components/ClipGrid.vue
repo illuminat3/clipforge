@@ -41,7 +41,9 @@
   <!-- Grid -->
   <div v-else class="grid-layout">
     <div class="toolbar">
-      <span class="muted-text small">{{ clips.length }} {{ clips.length === 1 ? 'clip' : 'clips' }}</span>
+      <span class="muted-text small"
+        >{{ clips.length }} {{ clips.length === 1 ? 'clip' : 'clips' }}</span
+      >
       <button class="ghost-btn small" @click="$emit('refresh')">
         <RefreshCw :size="13" />
         Refresh
@@ -168,7 +170,9 @@ code {
   color: var(--color-secondary-text);
   font-size: 13px;
   cursor: pointer;
-  transition: background 0.15s, color 0.15s;
+  transition:
+    background 0.15s,
+    color 0.15s;
 }
 
 .ghost-btn:hover {

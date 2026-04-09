@@ -97,7 +97,11 @@ export class LocalClipService {
       outputPath = `${this.outputDirectory}/${fileName}`.replace(/\\/g, '/')
     }
 
-    return window.electronAPI.clips.save({ inputPath: inputId, segments, outputPath }) as Promise<SaveResult>
+    return window.electronAPI.clips.save({
+      inputPath: inputId,
+      segments,
+      outputPath
+    }) as Promise<SaveResult>
   }
 }
 

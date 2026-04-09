@@ -51,11 +51,19 @@
         <!-- Toolbar -->
         <div class="toolbar">
           <span class="label-sm">Tool:</span>
-          <button :class="['tool-btn', { active: tool === 'select' }]" title="Select / Trim (S)" @click="tool = 'select'">
+          <button
+            :class="['tool-btn', { active: tool === 'select' }]"
+            title="Select / Trim (S)"
+            @click="tool = 'select'"
+          >
             <MousePointer :size="14" />
             Select
           </button>
-          <button :class="['tool-btn', { active: tool === 'razor' }]" title="Razor cut (R)" @click="tool = 'razor'">
+          <button
+            :class="['tool-btn', { active: tool === 'razor' }]"
+            title="Razor cut (R)"
+            @click="tool = 'razor'"
+          >
             <Scissors :size="14" />
             Razor
           </button>
@@ -66,7 +74,11 @@
             <RotateCcw :size="13" />
             Reset
           </button>
-          <button class="ghost-btn" title="Snap all clips to left — remove gaps" @click="handleSnapToLeft">
+          <button
+            class="ghost-btn"
+            title="Snap all clips to left — remove gaps"
+            @click="handleSnapToLeft"
+          >
             <ChevronsLeft :size="13" />
             Snap Left
           </button>
@@ -75,7 +87,9 @@
 
           <span v-if="editState" class="label-sm">
             {{ segCount }} {{ segCount === 1 ? 'clip' : 'clips' }}
-            <span v-if="selectedSeg !== null" class="accent-text"> · clip {{ selectedSeg + 1 }} selected</span>
+            <span v-if="selectedSeg !== null" class="accent-text">
+              · clip {{ selectedSeg + 1 }} selected</span
+            >
           </span>
         </div>
 
@@ -118,7 +132,10 @@
             <Volume2 v-else :size="16" />
           </button>
           <input
-            type="range" min="0" max="1" step="0.05"
+            type="range"
+            min="0"
+            max="1"
+            step="0.05"
             :value="muted ? 0 : volume"
             class="volume-slider"
             @input="handleVolumeInput"
@@ -151,8 +168,18 @@
 <script setup lang="ts">
 import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import {
-  ArrowLeft, X, Save, Play, Pause, MousePointer, Scissors,
-  Volume2, VolumeX, RotateCcw, Upload, ChevronsLeft
+  ArrowLeft,
+  X,
+  Save,
+  Play,
+  Pause,
+  MousePointer,
+  Scissors,
+  Volume2,
+  VolumeX,
+  RotateCcw,
+  Upload,
+  ChevronsLeft
 } from 'lucide-vue-next'
 import type { LocalClipService, ClipMeta, EditSegment } from '@renderer/services/clipService'
 import EditTimeline from './EditTimeline.vue'
@@ -190,7 +217,13 @@ const saveError = ref<string | null>(null)
 
 // Ref that stays in sync with editState for use inside event listeners
 let editStateSnapshot: { segments: EditSegment[] } | null = null
-watch(editState, (v) => { editStateSnapshot = v }, { deep: true })
+watch(
+  editState,
+  (v) => {
+    editStateSnapshot = v
+  },
+  { deep: true }
+)
 
 // Track current segment index during playback
 let playingSegIdx = 0
@@ -205,7 +238,7 @@ const clipDisplayName = computed(() => props.clip.name.replace(/\.[^.]+$/, ''))
 const segCount = computed(() => editState.value?.segments?.length ?? 1)
 
 const displaySeg = computed(() =>
-  selectedSeg.value !== null ? editState.value?.segments?.[selectedSeg.value] ?? null : null
+  selectedSeg.value !== null ? (editState.value?.segments?.[selectedSeg.value] ?? null) : null
 )
 const displayStart = computed(
   () => displaySeg.value?.start ?? editState.value?.segments?.[0]?.start ?? 0
@@ -276,53 +309,57 @@ function handleSnapToLeft(): void {
 }
 
 // Segment-aware playback
-watch(editState, () => {
-  const v = videoEl.value
-  if (!editState.value || !v) return
-  const segs = editState.value.segments
-  if (!segs.length) return
+watch(
+  editState,
+  () => {
+    const v = videoEl.value
+    if (!editState.value || !v) return
+    const segs = editState.value.segments
+    if (!segs.length) return
 
-  const onTimeUpdate = (): void => {
-    const t = v.currentTime
-    const ordered = getOrderedSegs(segs)
-    const idx = playingSegIdx
-    if (idx >= ordered.length) {
-      v.pause()
-      v.currentTime = ordered[0]?.start ?? 0
-      playingSegIdx = 0
-      return
-    }
-    const seg = ordered[idx]
-    if (t < seg.start) {
-      v.currentTime = seg.start
-    } else if (t >= seg.end) {
-      if (idx + 1 < ordered.length) {
-        playingSegIdx = idx + 1
-        v.currentTime = ordered[idx + 1].start
-      } else {
+    const onTimeUpdate = (): void => {
+      const t = v.currentTime
+      const ordered = getOrderedSegs(segs)
+      const idx = playingSegIdx
+      if (idx >= ordered.length) {
         v.pause()
-        v.currentTime = ordered[0].start
+        v.currentTime = ordered[0]?.start ?? 0
+        playingSegIdx = 0
+        return
+      }
+      const seg = ordered[idx]
+      if (t < seg.start) {
+        v.currentTime = seg.start
+      } else if (t >= seg.end) {
+        if (idx + 1 < ordered.length) {
+          playingSegIdx = idx + 1
+          v.currentTime = ordered[idx + 1].start
+        } else {
+          v.pause()
+          v.currentTime = ordered[0].start
+          playingSegIdx = 0
+        }
+      }
+    }
+
+    const onEnded = (): void => {
+      const ordered = getOrderedSegs(segs)
+      if (playingSegIdx + 1 < ordered.length) {
+        playingSegIdx += 1
+        v.currentTime = ordered[playingSegIdx].start
+        v.play()
+      } else {
+        v.currentTime = ordered[0]?.start ?? 0
         playingSegIdx = 0
       }
     }
-  }
 
-  const onEnded = (): void => {
-    const ordered = getOrderedSegs(segs)
-    if (playingSegIdx + 1 < ordered.length) {
-      playingSegIdx += 1
-      v.currentTime = ordered[playingSegIdx].start
-      v.play()
-    } else {
-      v.currentTime = ordered[0]?.start ?? 0
-      playingSegIdx = 0
-    }
-  }
-
-  v.addEventListener('timeupdate', onTimeUpdate)
-  v.addEventListener('ended', onEnded)
-  // Returned cleanup — but since this is a watch we can't auto-cleanup, so keep refs stable
-}, { deep: true })
+    v.addEventListener('timeupdate', onTimeUpdate)
+    v.addEventListener('ended', onEnded)
+    // Returned cleanup — but since this is a watch we can't auto-cleanup, so keep refs stable
+  },
+  { deep: true }
+)
 
 function handleVolumeInput(e: Event): void {
   const v = parseFloat((e.target as HTMLInputElement).value)
@@ -360,15 +397,21 @@ async function handleSave(mode: 'overwrite' | 'copy' | 'browse'): Promise<void> 
 // Keyboard shortcuts
 function onKey(e: KeyboardEvent): void {
   if ((e.target as HTMLElement).tagName === 'INPUT') return
-  if (e.code === 'Space') { e.preventDefault(); togglePlay() }
+  if (e.code === 'Space') {
+    e.preventDefault()
+    togglePlay()
+  }
   if (e.code === 'KeyS') tool.value = 'select'
   if (e.code === 'KeyR') tool.value = 'razor'
   if (e.code === 'Escape' && showSaveDialog.value) showSaveDialog.value = false
   if (e.code === 'ArrowRight')
     seekTo(Math.min((currentTime.value || 0) + (e.shiftKey ? 1 : 5), duration.value))
-  if (e.code === 'ArrowLeft')
-    seekTo(Math.max((currentTime.value || 0) - (e.shiftKey ? 1 : 5), 0))
-  if ((e.code === 'Delete' || e.code === 'Backspace') && selectedSeg.value !== null && editState.value) {
+  if (e.code === 'ArrowLeft') seekTo(Math.max((currentTime.value || 0) - (e.shiftKey ? 1 : 5), 0))
+  if (
+    (e.code === 'Delete' || e.code === 'Backspace') &&
+    selectedSeg.value !== null &&
+    editState.value
+  ) {
     e.preventDefault()
     const newSegs = editState.value.segments.filter((_, i) => i !== selectedSeg.value)
     editState.value = { segments: newSegs }
@@ -499,7 +542,9 @@ function formatTime(s: number): string {
   cursor: pointer;
   display: flex;
   align-items: center;
-  transition: color 0.15s, background 0.15s;
+  transition:
+    color 0.15s,
+    background 0.15s;
   margin-left: 4px;
 }
 
@@ -571,7 +616,9 @@ function formatTime(s: number): string {
   cursor: pointer;
   background: var(--color-surface-active);
   color: var(--color-secondary-text);
-  transition: background 0.15s, color 0.15s;
+  transition:
+    background 0.15s,
+    color 0.15s;
 }
 
 .tool-btn:hover {
@@ -602,7 +649,9 @@ function formatTime(s: number): string {
   background: transparent;
   color: var(--color-secondary-text);
   cursor: pointer;
-  transition: color 0.15s, background 0.15s;
+  transition:
+    color 0.15s,
+    background 0.15s;
 }
 
 .ghost-btn:hover {

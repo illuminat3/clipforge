@@ -18,7 +18,12 @@
             <p class="field-desc">Where OBS saves your raw clips</p>
             <div class="dir-row">
               <input v-model="form.clipsDirectory" type="text" class="text-input" />
-              <button v-if="hasElectron" type="button" class="browse-btn" @click="pickDirectory('clipsDirectory')">
+              <button
+                v-if="hasElectron"
+                type="button"
+                class="browse-btn"
+                @click="pickDirectory('clipsDirectory')"
+              >
                 <FolderOpen :size="15" />
               </button>
             </div>
@@ -28,7 +33,12 @@
             <p class="field-desc">Where edited clips are saved (Save as Copy)</p>
             <div class="dir-row">
               <input v-model="form.outputDirectory" type="text" class="text-input" />
-              <button v-if="hasElectron" type="button" class="browse-btn" @click="pickDirectory('outputDirectory')">
+              <button
+                v-if="hasElectron"
+                type="button"
+                class="browse-btn"
+                @click="pickDirectory('outputDirectory')"
+              >
                 <FolderOpen :size="15" />
               </button>
             </div>
@@ -40,10 +50,17 @@
           <h3 class="section-title"><Terminal :size="13" /> FFmpeg</h3>
           <div class="field">
             <label class="field-label">FFmpeg Executable</label>
-            <p class="field-desc">Path to ffmpeg.exe (leave blank to use system PATH or auto-detect)</p>
+            <p class="field-desc">
+              Path to ffmpeg.exe (leave blank to use system PATH or auto-detect)
+            </p>
             <div class="dir-row">
               <input v-model="form.ffmpegPath" type="text" class="text-input" />
-              <button v-if="hasElectron" type="button" class="browse-btn" @click="pickFile('ffmpegPath')">
+              <button
+                v-if="hasElectron"
+                type="button"
+                class="browse-btn"
+                @click="pickFile('ffmpegPath')"
+              >
                 <FolderOpen :size="15" />
               </button>
             </div>
@@ -56,12 +73,24 @@
           <div class="field">
             <label class="field-label">Server URL</label>
             <p class="field-desc">Base URL of your clip server (e.g. http://192.168.1.10:3000)</p>
-            <input v-model="form.serverUrl" type="text" class="text-input" placeholder="http://your-server:3000" disabled />
+            <input
+              v-model="form.serverUrl"
+              type="text"
+              class="text-input"
+              placeholder="http://your-server:3000"
+              disabled
+            />
           </div>
           <div class="field">
             <label class="field-label">API Token</label>
             <p class="field-desc">Bearer token for authentication</p>
-            <input v-model="form.serverToken" type="password" class="text-input" placeholder="your-api-token" disabled />
+            <input
+              v-model="form.serverToken"
+              type="password"
+              class="text-input"
+              placeholder="your-api-token"
+              disabled
+            />
           </div>
           <p class="note">Server integration will be enabled in a future update.</p>
         </section>
@@ -256,7 +285,9 @@ function handleSubmit(): void {
   cursor: pointer;
   display: flex;
   align-items: center;
-  transition: color 0.15s, border-color 0.15s;
+  transition:
+    color 0.15s,
+    border-color 0.15s;
   flex-shrink: 0;
 }
 
@@ -287,7 +318,9 @@ function handleSubmit(): void {
   font-size: 13px;
   color: var(--color-secondary-text);
   cursor: pointer;
-  transition: color 0.15s, background 0.15s;
+  transition:
+    color 0.15s,
+    background 0.15s;
 }
 
 .cancel-btn:hover {

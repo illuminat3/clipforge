@@ -22,7 +22,10 @@
 
       <div class="header-right">
         <span v-if="settings" class="dir-label" :title="currentDirectory">
-          <FolderOpen :size="12" style="display:inline; margin-right:4px; vertical-align:middle" />
+          <FolderOpen
+            :size="12"
+            style="display: inline; margin-right: 4px; vertical-align: middle"
+          />
           {{ currentDirectory }}
         </span>
         <button class="icon-btn" title="Settings" @click="showSettings = true">
@@ -254,7 +257,9 @@ async function handleSettingsSave(newSettings: AppSettings): Promise<void> {
   font-weight: 500;
   cursor: pointer;
   border: none;
-  transition: background 0.15s, color 0.15s;
+  transition:
+    background 0.15s,
+    color 0.15s;
   color: var(--color-secondary-text);
   background: transparent;
   user-select: none;
@@ -294,7 +299,9 @@ async function handleSettingsSave(newSettings: AppSettings): Promise<void> {
   cursor: pointer;
   display: flex;
   align-items: center;
-  transition: color 0.15s, background 0.15s;
+  transition:
+    color 0.15s,
+    background 0.15s;
 }
 
 .icon-btn:hover {

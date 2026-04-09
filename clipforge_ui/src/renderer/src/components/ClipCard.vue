@@ -116,7 +116,11 @@ function formatDuration(seconds: number): string {
 
 function formatDate(iso: string): string {
   if (!iso) return ''
-  return new Date(iso).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })
+  return new Date(iso).toLocaleDateString(undefined, {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric'
+  })
 }
 
 function formatSize(bytes: number): string {

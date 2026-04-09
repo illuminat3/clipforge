@@ -69,7 +69,9 @@
             <Pause v-if="isPlaying" :size="15" />
             <Play v-else :size="15" style="margin-left: 2px" />
           </button>
-          <span class="time-display">{{ formatTime(currentTime) }} / {{ formatTime(duration) }}</span>
+          <span class="time-display"
+            >{{ formatTime(currentTime) }} / {{ formatTime(duration) }}</span
+          >
 
           <div class="spacer" />
 
@@ -135,7 +137,9 @@ const videoSrc = computed(() => {
 })
 
 const displayName = computed(() => previewClip.value.name.replace(/\.[^.]+$/, ''))
-const progress = computed(() => (duration.value > 0 ? (currentTime.value / duration.value) * 100 : 0))
+const progress = computed(() =>
+  duration.value > 0 ? (currentTime.value / duration.value) * 100 : 0
+)
 
 function togglePlay(): void {
   const v = videoEl.value
@@ -205,7 +209,10 @@ function handleSaved(outputPath: string): void {
 function onKey(e: KeyboardEvent): void {
   if (mode.value === 'edit') return
   if ((e.target as HTMLElement).tagName === 'INPUT') return
-  if (e.code === 'Space') { e.preventDefault(); togglePlay() }
+  if (e.code === 'Space') {
+    e.preventDefault()
+    togglePlay()
+  }
   if (e.code === 'Escape') emit('close')
   if (e.code === 'ArrowRight' && videoEl.value) videoEl.value.currentTime += 5
   if (e.code === 'ArrowLeft' && videoEl.value) videoEl.value.currentTime -= 5
@@ -313,7 +320,9 @@ function formatTime(s: number): string {
   cursor: pointer;
   display: flex;
   align-items: center;
-  transition: color 0.15s, background 0.15s;
+  transition:
+    color 0.15s,
+    background 0.15s;
   margin-left: 4px;
 }
 
@@ -409,7 +418,7 @@ function formatTime(s: number): string {
   height: 12px;
   background: #fff;
   border-radius: 50%;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
   opacity: 0;
   transition: opacity 0.15s;
   pointer-events: none;

@@ -4,7 +4,8 @@ import { electronAPI } from '@electron-toolkit/preload'
 const clipforgeAPI = {
   settings: {
     get: (): Promise<Record<string, string>> => ipcRenderer.invoke('settings:get'),
-    set: (key: string, value: string): Promise<void> => ipcRenderer.invoke('settings:set', key, value),
+    set: (key: string, value: string): Promise<void> =>
+      ipcRenderer.invoke('settings:set', key, value),
     selectDirectory: (defaultPath?: string): Promise<string | null> =>
       ipcRenderer.invoke('settings:selectDirectory', defaultPath),
     selectFile: (defaultPath?: string): Promise<string | null> =>
@@ -14,8 +15,11 @@ const clipforgeAPI = {
     list: (directory: string) => ipcRenderer.invoke('clips:list', directory),
     getMetadata: (filePath: string) => ipcRenderer.invoke('clips:getMetadata', filePath),
     getThumbnail: (filePath: string) => ipcRenderer.invoke('clips:getThumbnail', filePath),
-    save: (args: { inputPath: string; segments: { start: number; end: number }[]; outputPath: string }) =>
-      ipcRenderer.invoke('clips:save', args),
+    save: (args: {
+      inputPath: string
+      segments: { start: number; end: number }[]
+      outputPath: string
+    }) => ipcRenderer.invoke('clips:save', args),
     saveDialog: (defaultPath?: string) => ipcRenderer.invoke('clips:saveDialog', defaultPath),
     delete: (filePath: string) => ipcRenderer.invoke('clips:delete', filePath),
     openFileLocation: (filePath: string) => ipcRenderer.invoke('clips:openFileLocation', filePath)
