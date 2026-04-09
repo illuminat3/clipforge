@@ -8,5 +8,8 @@
         public long StorageUsedBytes { get; set; }
         public long StorageLimitBytes { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+        public ICollection<Clip.ClipEntity> Clips { get; set; } = [];
+        public ICollection<Clip.UserClip> UserClips { get; set; } = [];
     }
 }
