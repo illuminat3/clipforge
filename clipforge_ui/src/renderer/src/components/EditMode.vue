@@ -1,6 +1,13 @@
 <template>
   <div class="edit-layout">
-    <div class="edit-header">
+    <header class="app-titlebar">
+      <div class="titlebar-content">
+        <Film :size="20" class="accent-icon" />
+        <span class="app-title">Clipforge</span>
+      </div>
+    </header>
+
+    <header class="edit-header">
       <div class="header-left">
         <button class="back-btn" @click="$emit('back')">
           <ArrowLeft :size="16" />
@@ -23,7 +30,7 @@
           <X :size="18" />
         </button>
       </div>
-    </div>
+    </header>
 
     <div class="edit-content">
       <div class="video-area">
@@ -426,6 +433,34 @@ function formatTime(s: number): string {
   display: flex;
   flex-direction: column;
   background: var(--color-primary-background);
+}
+
+.app-titlebar {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  background: var(--color-secondary-background);
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+  -webkit-app-region: drag;
+  height: 40px;
+}
+
+.titlebar-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.accent-icon {
+  color: var(--color-accent);
+}
+
+.app-title {
+  font-weight: 600;
+  color: var(--color-primary-text);
+  letter-spacing: 0.03em;
+  white-space: nowrap;
 }
 
 .edit-header {

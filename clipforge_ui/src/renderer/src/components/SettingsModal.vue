@@ -346,7 +346,9 @@ function handleSubmit(): void {
   color: var(--color-secondary-text);
   font-size: 12px;
   cursor: pointer;
-  transition: border-color 0.15s, color 0.15s;
+  transition:
+    border-color 0.15s,
+    color 0.15s;
   text-align: left;
 }
 

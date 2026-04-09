@@ -224,6 +224,7 @@ ipcMain.handle('clips:getThumbnail', (_, filePath: string) => {
         return resolve(cached.dataUrl)
       }
     } catch {
+      // ignore
     }
 
     const tmp = tmpdir()

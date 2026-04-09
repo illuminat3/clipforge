@@ -1,11 +1,13 @@
 <template>
   <div class="clips-layout">
-    <header class="clips-header">
-      <div class="header-left">
+    <header class="app-titlebar">
+      <div class="titlebar-content">
         <Film :size="20" class="accent-icon" />
         <span class="app-title">Clipforge</span>
       </div>
+    </header>
 
+    <header class="clips-header">
       <nav class="tabs">
         <button
           v-for="tab in TABS"
@@ -209,19 +211,18 @@ async function handleSettingsSave(newSettings: AppSettings): Promise<void> {
   color: var(--color-primary-text);
 }
 
-.clips-header {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
+.app-titlebar {
+  display: flex;
   align-items: center;
-  padding: 10px 16px;
+  padding: 8px 16px;
   background: var(--color-secondary-background);
   border-bottom: 1px solid var(--color-border);
   flex-shrink: 0;
-  gap: 12px;
   -webkit-app-region: drag;
+  height: 40px;
 }
 
-.header-left {
+.titlebar-content {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -236,6 +237,17 @@ async function handleSettingsSave(newSettings: AppSettings): Promise<void> {
   color: var(--color-primary-text);
   letter-spacing: 0.03em;
   white-space: nowrap;
+}
+
+.clips-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: var(--color-secondary-background);
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+  gap: 12px;
 }
 
 .tabs {
@@ -274,7 +286,6 @@ async function handleSettingsSave(newSettings: AppSettings): Promise<void> {
   display: flex;
   align-items: center;
   gap: 8px;
-  justify-self: end;
 }
 
 .dir-label {
