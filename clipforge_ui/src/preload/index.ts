@@ -2,6 +2,10 @@ import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 
 const clipforgeAPI = {
+  win: {
+    setTitleBarOverlay: (overlay: { color: string; symbolColor: string }): Promise<void> =>
+      ipcRenderer.invoke('win:setTitleBarOverlay', overlay)
+  },
   settings: {
     get: (): Promise<Record<string, string>> => ipcRenderer.invoke('settings:get'),
     set: (key: string, value: string): Promise<void> =>

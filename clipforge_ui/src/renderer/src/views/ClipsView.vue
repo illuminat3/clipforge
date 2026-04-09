@@ -218,6 +218,7 @@ async function handleSettingsSave(newSettings: AppSettings): Promise<void> {
   border-bottom: 1px solid var(--color-border);
   flex-shrink: 0;
   gap: 12px;
+  -webkit-app-region: drag;
 }
 
 .header-left {
@@ -244,6 +245,7 @@ async function handleSettingsSave(newSettings: AppSettings): Promise<void> {
 }
 
 .tab-btn {
+  -webkit-app-region: no-drag;
   padding: 5px 14px;
   border-radius: 4px;
   font-size: 13px;
@@ -285,6 +287,7 @@ async function handleSettingsSave(newSettings: AppSettings): Promise<void> {
 }
 
 .icon-btn {
+  -webkit-app-region: no-drag;
   padding: 6px;
   border-radius: 4px;
   border: none;

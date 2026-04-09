@@ -71,7 +71,11 @@ function createWindow(): void {
     minWidth: 900,
     minHeight: 600,
     show: false,
-    autoHideMenuBar: true,
+    title: '',
+    titleBarStyle: 'hidden',
+    ...(process.platform === 'win32'
+      ? { titleBarOverlay: { color: '#101618', symbolColor: '#8ec0cd', height: 40 } }
+      : {}),
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
@@ -338,6 +342,12 @@ ipcMain.handle('clips:saveDialog', async (_, defaultPath?: string) => {
 ipcMain.handle('clips:openFileLocation', (_, filePath: string) => {
   shell.showItemInFolder(normalize(filePath))
   return { success: true }
+})
+
+ipcMain.handle('win:setTitleBarOverlay', (_, overlay: { color: string; symbolColor: string }) => {
+  if (process.platform === 'win32' && mainWindow) {
+    mainWindow.setTitleBarOverlay({ ...overlay, height: 40 })
+  }
 })
 
 ipcMain.handle('clips:delete', async (_, filePath: string) => {

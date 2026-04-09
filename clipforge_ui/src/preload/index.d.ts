@@ -4,6 +4,9 @@ declare global {
   interface Window {
     electron: ElectronAPI
     electronAPI: {
+      win: {
+        setTitleBarOverlay: (overlay: { color: string; symbolColor: string }) => Promise<void>
+      }
       settings: {
         get: () => Promise<{
           clipsDirectory: string
