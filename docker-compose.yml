@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:trixie
+    container_name: clipforge_db
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: clipforge
+      POSTGRES_USER: clipforge
+      POSTGRES_PASSWORD: clipforge
+    volumes:
+      - clipforge_data:/var/lib/postgresql/data
+
+volumes:
+  clipforge_data:
