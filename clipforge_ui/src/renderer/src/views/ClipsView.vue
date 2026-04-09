@@ -1,13 +1,11 @@
 <template>
   <div class="clips-layout">
-    <!-- Header -->
     <header class="clips-header">
       <div class="header-left">
         <Film :size="20" class="accent-icon" />
         <span class="app-title">Clip Viewer</span>
       </div>
 
-      <!-- Tabs -->
       <nav class="tabs">
         <button
           v-for="tab in TABS"
@@ -34,7 +32,6 @@
       </div>
     </header>
 
-    <!-- Main -->
     <main class="clips-main">
       <ClipGrid
         v-if="activeTab === 'raw'"
@@ -60,7 +57,6 @@
       />
     </main>
 
-    <!-- Preview Modal -->
     <PreviewModal
       v-if="selectedClip && service"
       :clip="selectedClip"
@@ -70,7 +66,6 @@
       @saved-clip="handleSavedClip"
     />
 
-    <!-- Settings Modal -->
     <SettingsModal
       v-if="showSettings && settings"
       :settings="settings"
@@ -115,7 +110,6 @@ const currentDirectory = computed(() =>
   activeTab.value === 'raw' ? settings.value?.clipsDirectory : settings.value?.outputDirectory
 )
 
-// Load settings on mount
 onMounted(async () => {
   if (window.electronAPI) {
     const s = await window.electronAPI.settings.get()
@@ -154,7 +148,6 @@ async function loadSavedClips(): Promise<void> {
   loadingSaved.value = false
 }
 
-// Load clips when service becomes available or tab changes
 watch(
   [service, activeTab],
   ([svc, tab]) => {

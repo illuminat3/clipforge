@@ -1,5 +1,4 @@
 <template>
-  <!-- Loading -->
   <div v-if="loading" class="center-state">
     <div class="loading-row">
       <RefreshCw :size="20" class="animate-spin muted-icon" />
@@ -7,7 +6,6 @@
     </div>
   </div>
 
-  <!-- Error -->
   <div v-else-if="error" class="center-state">
     <AlertCircle :size="48" class="error-icon" />
     <div class="state-text">
@@ -23,7 +21,6 @@
     </button>
   </div>
 
-  <!-- Empty -->
   <div v-else-if="clips.length === 0" class="center-state">
     <Film :size="64" stroke-width="1" class="empty-icon" />
     <div class="state-text center">
@@ -38,7 +35,6 @@
     </button>
   </div>
 
-  <!-- Grid -->
   <div v-else class="grid-layout">
     <div class="toolbar">
       <span class="muted-text small"

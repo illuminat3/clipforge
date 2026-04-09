@@ -19,7 +19,6 @@
       </div>
 
       <div class="options">
-        <!-- Overwrite -->
         <button
           :disabled="saving"
           class="save-option opt-danger"
@@ -35,7 +34,6 @@
           </div>
         </button>
 
-        <!-- Save as Copy -->
         <button :disabled="saving" class="save-option opt-primary" @click="$emit('save', 'copy')">
           <span class="opt-icon accent-icon">
             <Loader2 v-if="saving" :size="18" class="animate-spin" />
@@ -47,7 +45,6 @@
           </div>
         </button>
 
-        <!-- Choose Location -->
         <button
           :disabled="saving"
           class="save-option opt-secondary"

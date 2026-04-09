@@ -1,7 +1,6 @@
 <template>
   <div class="backdrop">
     <div class="modal">
-      <!-- Header -->
       <div class="modal-header">
         <h2 class="modal-title">Settings</h2>
         <button class="close-btn" @click="$emit('close')">
@@ -10,7 +9,6 @@
       </div>
 
       <form class="modal-body" @submit.prevent="handleSubmit">
-        <!-- Local Directories -->
         <section class="section">
           <h3 class="section-title"><FolderOpen :size="13" /> Local Directories</h3>
           <div class="field">
@@ -45,7 +43,6 @@
           </div>
         </section>
 
-        <!-- FFmpeg -->
         <section class="section">
           <h3 class="section-title"><Terminal :size="13" /> FFmpeg</h3>
           <div class="field">
@@ -67,7 +64,6 @@
           </div>
         </section>
 
-        <!-- Server (coming soon) -->
         <section class="section faded">
           <h3 class="section-title"><Server :size="13" /> Server (Coming Soon)</h3>
           <div class="field">
@@ -95,7 +91,6 @@
           <p class="note">Server integration will be enabled in a future update.</p>
         </section>
 
-        <!-- Actions -->
         <div class="actions">
           <button type="button" class="cancel-btn" @click="$emit('close')">Cancel</button>
           <button type="submit" class="save-btn">

@@ -7,7 +7,6 @@
     @mouseleave="confirmDelete = false"
     @keydown.enter="$emit('click')"
   >
-    <!-- Open file location -->
     <button
       v-if="clip.path"
       class="overlay-btn top-left"
@@ -17,7 +16,6 @@
       <FolderOpen :size="14" />
     </button>
 
-    <!-- Delete button -->
     <button
       :class="['overlay-btn top-right', { danger: confirmDelete }]"
       :title="confirmDelete ? 'Click again to confirm delete' : 'Delete clip'"
@@ -27,17 +25,14 @@
       <Trash2 v-else :size="14" />
     </button>
 
-    <!-- Thumbnail -->
     <div class="thumbnail">
       <img v-if="thumbnail" :src="thumbnail" :alt="displayName" class="thumb-img" />
       <Film v-else :size="32" class="thumb-placeholder" />
 
-      <!-- Duration badge -->
       <span v-if="metadata?.duration" class="duration-badge">
         {{ formatDuration(metadata.duration) }}
       </span>
 
-      <!-- Hover play overlay -->
       <div class="hover-overlay">
         <div class="play-circle">
           <div class="play-triangle" />
@@ -45,7 +40,6 @@
       </div>
     </div>
 
-    <!-- Info -->
     <div class="clip-info">
       <p class="clip-name" :title="clip.name">{{ displayName }}</p>
       <div class="clip-meta">
@@ -150,7 +144,6 @@ function formatSize(bytes: number): string {
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
 }
 
-/* Overlay buttons (shown on hover) */
 .overlay-btn {
   position: absolute;
   z-index: 10;
@@ -200,7 +193,6 @@ function formatSize(bytes: number): string {
   padding: 0 2px;
 }
 
-/* Thumbnail */
 .thumbnail {
   position: relative;
   aspect-ratio: 16 / 9;
@@ -278,7 +270,6 @@ function formatSize(bytes: number): string {
   border-left: 12px solid rgba(255, 255, 255, 0.9);
 }
 
-/* Info */
 .clip-info {
   padding: 10px 12px;
 }

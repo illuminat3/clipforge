@@ -76,7 +76,7 @@ function createWindow(): void {
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false,
-      webSecurity: false // allow local file:// video playback
+      webSecurity: false
     }
   })
 
@@ -117,8 +117,6 @@ app.on('window-all-closed', () => {
   }
 })
 
-// ─── Settings IPC ────────────────────────────────────────────────────────────
-
 ipcMain.handle('settings:get', () => {
   if (!store) return {}
   return store.store
@@ -148,8 +146,6 @@ ipcMain.handle('settings:selectDirectory', async (_, defaultPath?: string) => {
   if (!result.canceled && result.filePaths.length > 0) return result.filePaths[0]
   return null
 })
-
-// ─── Clips IPC ───────────────────────────────────────────────────────────────
 
 const VIDEO_EXTS = new Set(['.mp4', '.mov', '.mkv', '.avi', '.webm', '.flv', '.wmv'])
 
@@ -211,7 +207,6 @@ function parseFraction(str: string): number {
   return parseFloat(str) || 0
 }
 
-// Thumbnail cache: filePath -> { mtime, dataUrl }
 const thumbnailCache = new Map<string, { mtime: number; dataUrl: string }>()
 
 ipcMain.handle('clips:getThumbnail', (_, filePath: string) => {
@@ -225,7 +220,6 @@ ipcMain.handle('clips:getThumbnail', (_, filePath: string) => {
         return resolve(cached.dataUrl)
       }
     } catch {
-      // ignore
     }
 
     const tmp = tmpdir()
@@ -255,8 +249,6 @@ ipcMain.handle('clips:getThumbnail', (_, filePath: string) => {
       })
   })
 })
-
-// ─── Edit / Save IPC ─────────────────────────────────────────────────────────
 
 interface SaveSegment {
   start: number

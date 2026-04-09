@@ -1,6 +1,5 @@
 <template>
   <div class="timeline-wrap no-select">
-    <!-- Zoom controls -->
     <div class="zoom-row">
       <span class="zoom-label">{{ zoom.toFixed(1) }}x</span>
       <button class="zoom-btn" title="Zoom out" @click="zoom = Math.max(1, zoom / 1.5)">
@@ -11,9 +10,7 @@
       </button>
     </div>
 
-    <!-- Scrollable area -->
     <div ref="scrollEl" class="scroll-area">
-      <!-- Ruler -->
       <div :style="innerStyle">
         <div class="ruler">
           <div
@@ -28,28 +25,24 @@
         </div>
       </div>
 
-      <!-- Track -->
       <div
         ref="trackEl"
         class="track"
         :style="{ ...innerStyle, cursor: tool === 'razor' ? 'crosshair' : 'default' }"
         @mousedown="handleTrackMouseDown"
       >
-        <!-- Segments -->
         <div
           v-for="(seg, idx) in segments"
           :key="idx"
           class="seg-wrapper"
           :style="segStyle(seg, idx)"
         >
-          <!-- Clip body -->
           <div
             :class="['seg-body', { selected: selectedSeg === idx }]"
             :style="{ cursor: tool === 'razor' ? 'crosshair' : 'grab' }"
             @mousedown="(e) => handleSegMouseDown(idx, e)"
           />
 
-          <!-- Left trim handle -->
           <div class="trim-handle left" @mousedown.stop="(e) => handleLeftMouseDown(idx, e)">
             <div class="handle-lines">
               <div class="h-line" />
@@ -57,7 +50,6 @@
             </div>
           </div>
 
-          <!-- Right trim handle -->
           <div class="trim-handle right" @mousedown.stop="(e) => handleRightMouseDown(idx, e)">
             <div class="handle-lines">
               <div class="h-line" />
@@ -66,7 +58,6 @@
           </div>
         </div>
 
-        <!-- Playhead -->
         <div
           v-if="playheadPct !== null"
           class="playhead"
@@ -107,7 +98,6 @@ const scrollEl = ref<HTMLElement | null>(null)
 const trackEl = ref<HTMLElement | null>(null)
 const zoom = ref(1)
 
-// Keep a mutable ref for use inside mousedown closures
 let segsSnapshot: EditSegment[] = props.segments
 watch(
   () => props.segments,
@@ -134,7 +124,6 @@ const innerStyle = computed(() => ({
   minWidth: '100%'
 }))
 
-// Ruler ticks
 const rulerTicks = computed(() => {
   const d = totalTimelineDur.value
   const step = pickStep(d)
@@ -172,7 +161,6 @@ function srcToTimelineTime(srcTime: number): number | null {
   return null
 }
 
-// Segment style
 function segStyle(seg: EditSegment, idx: number): CSSProperties {
   const tlStart = seg.timelineOffset ?? 0
   const dur = seg.end - seg.start
@@ -188,7 +176,6 @@ function segStyle(seg: EditSegment, idx: number): CSSProperties {
   }
 }
 
-// ── Drag: body ────────────────────────────────────────────────────────────────
 function handleBodyMouseDown(idx: number, e: MouseEvent): void {
   e.stopPropagation()
   if (props.tool !== 'select') return
@@ -215,7 +202,6 @@ function handleBodyMouseDown(idx: number, e: MouseEvent): void {
   window.addEventListener('mouseup', up)
 }
 
-// ── Drag: left trim ───────────────────────────────────────────────────────────
 function handleLeftMouseDown(idx: number, e: MouseEvent): void {
   e.stopPropagation()
   const { start: origStart, end, timelineOffset: origTLO = 0 } = segsSnapshot[idx]
@@ -244,7 +230,6 @@ function handleLeftMouseDown(idx: number, e: MouseEvent): void {
   window.addEventListener('mouseup', up)
 }
 
-// ── Drag: right trim ──────────────────────────────────────────────────────────
 function handleRightMouseDown(idx: number, e: MouseEvent): void {
   e.stopPropagation()
   const { start, end: origEnd } = segsSnapshot[idx]
@@ -269,7 +254,6 @@ function handleRightMouseDown(idx: number, e: MouseEvent): void {
   window.addEventListener('mouseup', up)
 }
 
-// ── Segment click/drag ────────────────────────────────────────────────────────
 function handleSegMouseDown(idx: number, e: MouseEvent): void {
   e.stopPropagation()
   if (props.tool === 'razor') {
@@ -293,7 +277,6 @@ function handleSegMouseDown(idx: number, e: MouseEvent): void {
   }
 }
 
-// ── Track background click ────────────────────────────────────────────────────
 function handleTrackMouseDown(e: MouseEvent): void {
   if (e.target !== trackEl.value) return
   emit('select-seg', null)
@@ -303,7 +286,6 @@ function handleTrackMouseDown(e: MouseEvent): void {
   if (srcTime !== null) emit('seek', srcTime)
 }
 
-// ── Playhead drag ─────────────────────────────────────────────────────────────
 function handlePlayheadMouseDown(e: MouseEvent): void {
   const doSeek = (ev: MouseEvent): void => {
     const tlTime = xToTimelineTime(ev.clientX)
@@ -321,13 +303,11 @@ function handlePlayheadMouseDown(e: MouseEvent): void {
   window.addEventListener('mouseup', onUp)
 }
 
-// Playhead position
 const playheadTLTime = computed(() => srcToTimelineTime(props.currentTime))
 const playheadPct = computed(() =>
   playheadTLTime.value !== null ? (playheadTLTime.value / totalTimelineDur.value) * 100 : null
 )
 
-// Auto-scroll to keep playhead visible
 watch(playheadTLTime, (tlTime) => {
   if (tlTime === null || !scrollEl.value) return
   const el = scrollEl.value
@@ -337,7 +317,6 @@ watch(playheadTLTime, (tlTime) => {
   }
 })
 
-// Helpers
 function pickStep(d: number): number {
   if (d <= 30) return 5
   if (d <= 120) return 15
@@ -404,7 +383,6 @@ function formatRulerTime(s: number): string {
   scrollbar-width: thin;
 }
 
-/* Ruler */
 .ruler {
   position: relative;
   height: 20px;
@@ -432,7 +410,6 @@ function formatRulerTime(s: number): string {
   white-space: nowrap;
 }
 
-/* Track */
 .track {
   position: relative;
   height: 48px;
@@ -440,7 +417,6 @@ function formatRulerTime(s: number): string {
   background: var(--color-surface-active);
 }
 
-/* Segment */
 .seg-wrapper {
   position: absolute;
   top: 0;
@@ -450,15 +426,14 @@ function formatRulerTime(s: number): string {
 .seg-body {
   position: absolute;
   inset: 0;
-  background: #4338ca; /* indigo-700 */
+  background: #4338ca;
   transition: background 0.15s;
 }
 
 .seg-body.selected {
-  background: #6366f1; /* indigo-500 */
+  background: #6366f1;
 }
 
-/* Trim handles */
 .trim-handle {
   position: absolute;
   top: 0;
@@ -500,7 +475,6 @@ function formatRulerTime(s: number): string {
   border-radius: 1px;
 }
 
-/* Playhead */
 .playhead {
   position: absolute;
   top: 0;

@@ -1,7 +1,6 @@
 @use './scss/abstracts/_variables';
 @use './scss/_globals';
 
-// ─── Scrollbar ────────────────────────────────────────────────────────────────
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -20,12 +19,10 @@
   background: var(--color-surface-active);
 }
 
-// ─── Video ────────────────────────────────────────────────────────────────────
 video {
   outline: none;
 }
 
-// ─── Global utilities ─────────────────────────────────────────────────────────
 button:active {
   transform: none;
 }
@@ -41,7 +38,6 @@ button:active {
   flex-direction: column;
 }
 
-// ─── Spin animation ───────────────────────────────────────────────────────────
 @keyframes spin {
   from {
     transform: rotate(0deg);

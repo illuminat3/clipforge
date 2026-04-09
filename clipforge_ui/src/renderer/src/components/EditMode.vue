@@ -1,6 +1,5 @@
 <template>
   <div class="edit-layout">
-    <!-- Header -->
     <div class="edit-header">
       <div class="header-left">
         <button class="back-btn" @click="$emit('back')">
@@ -26,9 +25,7 @@
       </div>
     </div>
 
-    <!-- Content -->
     <div class="edit-content">
-      <!-- Video -->
       <div class="video-area">
         <video
           v-if="videoSrc"
@@ -46,9 +43,7 @@
         <div v-else class="no-source">No video source</div>
       </div>
 
-      <!-- Edit controls -->
       <div class="edit-controls">
-        <!-- Toolbar -->
         <div class="toolbar">
           <span class="label-sm">Tool:</span>
           <button
@@ -93,7 +88,6 @@
           </span>
         </div>
 
-        <!-- Timeline -->
         <EditTimeline
           v-if="editState && duration > 0"
           :duration="duration"
@@ -107,7 +101,6 @@
         />
         <div v-else class="timeline-placeholder animate-pulse" />
 
-        <!-- Playback controls -->
         <div class="playback-row">
           <button class="ctrl-btn round" @click="togglePlay">
             <Pause v-if="isPlaying" :size="14" />
@@ -142,7 +135,6 @@
           />
         </div>
 
-        <!-- Keyboard hints -->
         <div class="hints-row">
           <span><kbd>Space</kbd> Play/Pause</span>
           <span><kbd>S</kbd> Select tool</span>
@@ -153,7 +145,6 @@
       </div>
     </div>
 
-    <!-- Save dialog -->
     <SaveDialog
       v-if="showSaveDialog"
       :clip-name="clip.name"
@@ -199,7 +190,6 @@ const emit = defineEmits<{
   saved: [outputPath: string]
 }>()
 
-// Video
 const videoEl = ref<HTMLVideoElement | null>(null)
 const duration = ref(0)
 const currentTime = ref(0)
@@ -207,7 +197,6 @@ const isPlaying = ref(false)
 const muted = ref(false)
 const volume = ref(1)
 
-// Edit state
 const tool = ref<'select' | 'razor'>('select')
 const editState = ref<{ segments: EditSegment[] } | null>(null)
 const selectedSeg = ref<number | null>(null)
@@ -215,7 +204,6 @@ const showSaveDialog = ref(false)
 const saving = ref(false)
 const saveError = ref<string | null>(null)
 
-// Ref that stays in sync with editState for use inside event listeners
 let editStateSnapshot: { segments: EditSegment[] } | null = null
 watch(
   editState,
@@ -225,7 +213,6 @@ watch(
   { deep: true }
 )
 
-// Track current segment index during playback
 let playingSegIdx = 0
 
 const videoSrc = computed(() => {
@@ -308,7 +295,6 @@ function handleSnapToLeft(): void {
   selectedSeg.value = null
 }
 
-// Segment-aware playback
 watch(
   editState,
   () => {
@@ -356,7 +342,6 @@ watch(
 
     v.addEventListener('timeupdate', onTimeUpdate)
     v.addEventListener('ended', onEnded)
-    // Returned cleanup — but since this is a watch we can't auto-cleanup, so keep refs stable
   },
   { deep: true }
 )
@@ -394,7 +379,6 @@ async function handleSave(mode: 'overwrite' | 'copy' | 'browse'): Promise<void> 
   saving.value = false
 }
 
-// Keyboard shortcuts
 function onKey(e: KeyboardEvent): void {
   if ((e.target as HTMLElement).tagName === 'INPUT') return
   if (e.code === 'Space') {
@@ -553,7 +537,6 @@ function formatTime(s: number): string {
   background: var(--color-surface-active);
 }
 
-/* Content */
 .edit-content {
   flex: 1;
   overflow: hidden;
@@ -581,7 +564,6 @@ function formatTime(s: number): string {
   font-size: 13px;
 }
 
-/* Controls panel */
 .edit-controls {
   flex-shrink: 0;
   background: var(--color-secondary-background);
@@ -673,7 +655,6 @@ function formatTime(s: number): string {
   border-radius: 4px;
 }
 
-/* Playback row */
 .playback-row {
   display: flex;
   align-items: center;
@@ -742,7 +723,6 @@ function formatTime(s: number): string {
   accent-color: var(--color-accent);
 }
 
-/* Keyboard hints */
 .hints-row {
   display: flex;
   gap: 16px;

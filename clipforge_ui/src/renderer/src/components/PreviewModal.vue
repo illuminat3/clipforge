@@ -1,5 +1,4 @@
 <template>
-  <!-- Edit mode replaces the whole modal -->
   <EditMode
     v-if="mode === 'edit'"
     :clip="previewClip"
@@ -10,10 +9,8 @@
     @saved="handleSaved"
   />
 
-  <!-- Preview mode -->
   <div v-else class="modal-backdrop" @click.self="$emit('close')">
     <div class="modal-box">
-      <!-- Header -->
       <div class="modal-header">
         <h2 class="modal-title" :title="clip.name">{{ displayName }}</h2>
         <div class="header-actions">
@@ -31,7 +28,6 @@
         </div>
       </div>
 
-      <!-- Video -->
       <div class="video-area">
         <video
           v-if="videoSrc"
@@ -48,22 +44,18 @@
         />
         <div v-else class="no-source">No video source</div>
 
-        <!-- Loading overlay for newly saved clip -->
         <div v-if="loadingNewClip" class="loading-overlay">
           <div class="spinner" />
           <span class="loading-text">Loading saved clip...</span>
         </div>
       </div>
 
-      <!-- Controls -->
       <div class="controls-bar">
-        <!-- Timeline scrubber -->
         <div ref="timelineEl" class="scrubber" @mousedown="handleTimelineMouseDown">
           <div class="scrubber-progress" :style="{ width: `${progress}%` }" />
           <div class="scrubber-thumb" :style="{ left: `calc(${progress}% - 6px)` }" />
         </div>
 
-        <!-- Buttons -->
         <div class="controls-row">
           <button class="ctrl-btn round" @click="togglePlay">
             <Pause v-if="isPlaying" :size="15" />
@@ -205,7 +197,6 @@ function handleSaved(outputPath: string): void {
   emit('saved-clip', outputPath)
 }
 
-// Keyboard shortcuts
 function onKey(e: KeyboardEvent): void {
   if (mode.value === 'edit') return
   if ((e.target as HTMLElement).tagName === 'INPUT') return
@@ -331,7 +322,6 @@ function formatTime(s: number): string {
   background: var(--color-surface-active);
 }
 
-/* Video */
 .video-area {
   position: relative;
   background: #000;
@@ -379,7 +369,6 @@ function formatTime(s: number): string {
   color: var(--color-secondary-text);
 }
 
-/* Controls */
 .controls-bar {
   padding: 12px 16px;
   background: var(--color-secondary-background);
