@@ -3,7 +3,7 @@
     <div class="modal">
       <div class="modal-header">
         <h2 class="modal-title">Settings</h2>
-        <button class="close-btn" @click="$emit('close')">
+        <button class="close-btn" @click="handleClose">
           <X :size="18" />
         </button>
       </div>
@@ -73,7 +73,7 @@
                 v-for="t in THEMES"
                 :key="t.value"
                 :class="['theme-swatch', { active: currentTheme === t.value }]"
-                @click="setTheme(t.value)"
+                @click="previewTheme(t.value)"
               >
                 <span class="swatch-dot" :style="{ background: t.accent }" />
                 {{ t.label }}
@@ -110,7 +110,7 @@
         </section>
 
         <div class="actions">
-          <button type="button" class="cancel-btn" @click="$emit('close')">Cancel</button>
+          <button type="button" class="cancel-btn" @click="handleClose">Cancel</button>
           <button type="submit" class="save-btn">
             <Save :size="14" />
             Save Settings
@@ -142,6 +142,7 @@ const form = reactive<AppSettings>({ ...props.settings })
 const hasElectron = computed(() => !!window.electronAPI)
 
 const { theme: currentTheme, setTheme } = useTheme()
+const originalTheme = currentTheme.value
 
 const THEMES = [
   { value: Theme.DeepBlue, label: 'Deep Blue', accent: '#8ec0cd' },
@@ -149,6 +150,10 @@ const THEMES = [
   { value: Theme.PinkDelight, label: 'Pink Delight', accent: '#fb6f92' },
   { value: Theme.RedSunset, label: 'Red Sunset', accent: '#e85d04' }
 ]
+
+function previewTheme(t: Theme): void {
+  setTheme(t)
+}
 
 async function pickDirectory(key: keyof AppSettings): Promise<void> {
   if (!window.electronAPI) return
@@ -160,6 +165,11 @@ async function pickFile(key: keyof AppSettings): Promise<void> {
   if (!window.electronAPI) return
   const file = await window.electronAPI.settings.selectFile(form[key])
   if (file) form[key] = file
+}
+
+function handleClose(): void {
+  setTheme(originalTheme)
+  emit('close')
 }
 
 function handleSubmit(): void {

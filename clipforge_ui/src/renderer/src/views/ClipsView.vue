@@ -3,7 +3,7 @@
     <header class="clips-header">
       <div class="header-left">
         <Film :size="20" class="accent-icon" />
-        <span class="app-title">Clip Viewer</span>
+        <span class="app-title">Clipforge</span>
       </div>
 
       <nav class="tabs">
@@ -210,9 +210,9 @@ async function handleSettingsSave(newSettings: AppSettings): Promise<void> {
 }
 
 .clips-header {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
   padding: 10px 16px;
   background: var(--color-secondary-background);
   border-bottom: 1px solid var(--color-border);
@@ -272,6 +272,7 @@ async function handleSettingsSave(newSettings: AppSettings): Promise<void> {
   display: flex;
   align-items: center;
   gap: 8px;
+  justify-self: end;
 }
 
 .dir-label {
