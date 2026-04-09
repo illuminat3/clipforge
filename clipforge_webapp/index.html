@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!--
+      Discord Open Graph / oEmbed embed tags.
+      These are injected server-side per clip in production.
+      For local dev, they point to the static video.mp4.
+
+      Discord reads these on first link-post and caches them.
+      To bust the cache: https://discord.com/developers/docs/resources/channel
+    -->
+    <meta property="og:type" content="video.other" />
+    <meta property="og:title" content="Clip" />
+    <meta property="og:description" content="" />
+
+    <!-- The direct video URL Discord will embed as a player -->
+    <meta property="og:video" content="http://localhost:5173/video.mp4" />
+    <meta property="og:video:secure_url" content="https://yourdomain.com/video.mp4" />
+    <meta property="og:video:type" content="video/mp4" />
+    <meta property="og:video:width" content="1280" />
+    <meta property="og:video:height" content="720" />
+
+    <!-- Twitter card (also picked up by some embed renderers) -->
+    <meta name="twitter:card" content="player" />
+    <meta name="twitter:player" content="https://yourdomain.com/clip/CLIP_ID" />
+    <meta name="twitter:player:width" content="1280" />
+    <meta name="twitter:player:height" content="720" />
+
+    <title>Clip</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
