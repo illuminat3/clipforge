@@ -64,6 +64,24 @@
           </div>
         </section>
 
+        <section class="section">
+          <h3 class="section-title"><Palette :size="13" /> Appearance</h3>
+          <div class="field">
+            <label class="field-label">Theme</label>
+            <div class="theme-grid">
+              <button
+                v-for="t in THEMES"
+                :key="t.value"
+                :class="['theme-swatch', { active: currentTheme === t.value }]"
+                @click="setTheme(t.value)"
+              >
+                <span class="swatch-dot" :style="{ background: t.accent }" />
+                {{ t.label }}
+              </button>
+            </div>
+          </div>
+        </section>
+
         <section class="section faded">
           <h3 class="section-title"><Server :size="13" /> Server (Coming Soon)</h3>
           <div class="field">
@@ -105,8 +123,9 @@
 
 <script setup lang="ts">
 import { reactive, computed } from 'vue'
-import { X, FolderOpen, Terminal, Server, Save } from 'lucide-vue-next'
+import { X, FolderOpen, Terminal, Server, Save, Palette } from 'lucide-vue-next'
 import type { AppSettings } from '@renderer/services/clipService'
+import { useTheme, Theme } from '@renderer/composables/useTheme'
 
 defineOptions({ name: 'SettingsModal' })
 
@@ -121,6 +140,15 @@ const emit = defineEmits<{
 
 const form = reactive<AppSettings>({ ...props.settings })
 const hasElectron = computed(() => !!window.electronAPI)
+
+const { theme: currentTheme, setTheme } = useTheme()
+
+const THEMES = [
+  { value: Theme.DeepBlue, label: 'Deep Blue', accent: '#8ec0cd' },
+  { value: Theme.MermaidDream, label: 'Mermaid Dream', accent: '#3fc1c0' },
+  { value: Theme.PinkDelight, label: 'Pink Delight', accent: '#fb6f92' },
+  { value: Theme.RedSunset, label: 'Red Sunset', accent: '#e85d04' }
+]
 
 async function pickDirectory(key: keyof AppSettings): Promise<void> {
   if (!window.electronAPI) return
@@ -289,6 +317,44 @@ function handleSubmit(): void {
 .browse-btn:hover {
   color: var(--color-primary-text);
   border-color: var(--color-border-focus);
+}
+
+.theme-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.theme-swatch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-active);
+  color: var(--color-secondary-text);
+  font-size: 12px;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+  text-align: left;
+}
+
+.theme-swatch:hover {
+  border-color: var(--color-border-focus);
+  color: var(--color-primary-text);
+}
+
+.theme-swatch.active {
+  border-color: var(--color-accent);
+  color: var(--color-primary-text);
+}
+
+.swatch-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
 }
 
 .note {
