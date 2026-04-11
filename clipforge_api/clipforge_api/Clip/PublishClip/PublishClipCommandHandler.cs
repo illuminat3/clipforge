@@ -14,25 +14,21 @@ namespace clipforge_api.Clip.PublishClip
     {
         public async Task<PublishClipResult> Handle(PublishClipCommand request, CancellationToken ct)
         {
-            var userIdClaim = httpContextAccessor.HttpContext!.User.FindFirst(ClaimTypes.NameIdentifier)?.Value
-                ?? throw new UnauthorizedAccessException();
+            var userIdClaim = httpContextAccessor.HttpContext!.User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? throw new UnauthorizedAccessException();
             var userId = Guid.Parse(userIdClaim);
+            var user = await db.Users.FindAsync([userId], ct) ?? throw new UnauthorizedAccessException();
 
-            var user = await db.Users.FindAsync([userId], ct)
-                ?? throw new UnauthorizedAccessException();
-
-            // Validate storage limit
             if (user.StorageUsedBytes + request.File.Length > user.StorageLimitBytes)
+            {
                 throw new InvalidOperationException("Storage limit exceeded.");
+            }
 
             var clipId = Guid.NewGuid();
 
-            // Store in storage provider
             var httpClient = httpClientFactory.CreateClient("StorageProvider");
 
             using var formContent = new MultipartFormDataContent();
 
-            // id and accountId must appear before the file part (storage provider reads parts sequentially)
             formContent.Add(new StringContent(clipId.ToString()), "id");
             formContent.Add(new StringContent(userId.ToString()), "accountId");
             formContent.Add(new StringContent(request.File.FileName), "fileName");
@@ -47,7 +43,6 @@ namespace clipforge_api.Clip.PublishClip
             var storageResponse = await httpClient.PostAsync("/store", formContent, ct);
             storageResponse.EnsureSuccessStatusCode();
 
-            // Save clip to database
             var clip = new ClipEntity
             {
                 Id = clipId,
