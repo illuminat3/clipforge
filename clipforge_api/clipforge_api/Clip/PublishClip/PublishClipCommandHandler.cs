@@ -6,11 +6,7 @@ using System.Security.Claims;
 
 namespace clipforge_api.Clip.PublishClip
 {
-    public class PublishClipCommandHandler(
-        AppDbContext db,
-        IHttpContextAccessor httpContextAccessor,
-        IHttpClientFactory httpClientFactory)
-        : IRequestHandler<PublishClipCommand, PublishClipResult>
+    public class PublishClipCommandHandler(AppDbContext db, IHttpContextAccessor httpContextAccessor, IHttpClientFactory httpClientFactory) : IRequestHandler<PublishClipCommand, PublishClipResult>
     {
         public async Task<PublishClipResult> Handle(PublishClipCommand request, CancellationToken ct)
         {
@@ -35,9 +31,9 @@ namespace clipforge_api.Clip.PublishClip
 
             var fileStream = request.File.OpenReadStream();
             var fileContent = new StreamContent(fileStream);
-            fileContent.Headers.ContentType = new MediaTypeHeaderValue(
-                string.IsNullOrEmpty(request.File.ContentType) ? "video/mp4" : request.File.ContentType);
-
+            var hasFileContent = !string.IsNullOrEmpty(request.File.ContentType)
+            
+            fileContent.Headers.ContentType = new MediaTypeHeaderValue(hasFileContent ? request.File.ContentType : "video/mp4");
             formContent.Add(fileContent, "file", request.File.FileName);
 
             var storageResponse = await httpClient.PostAsync("/store", formContent, ct);
