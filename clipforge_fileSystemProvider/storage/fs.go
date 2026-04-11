@@ -183,6 +183,25 @@ func (fs *FileSystem) readMeta(path string) (VideoMeta, error) {
 	return meta, nil
 }
 
+// VideoFilePath returns the filesystem path to the stored video file for the given ID.
+func (fs *FileSystem) VideoFilePath(id string) (string, error) {
+	meta, err := fs.FindMeta(id)
+	if err != nil {
+		return "", err
+	}
+	return fs.videoPath(meta.AccountID, id), nil
+}
+
+// SetDuration updates the stored duration for an existing video.
+func (fs *FileSystem) SetDuration(id string, durationSeconds float64) error {
+	meta, err := fs.FindMeta(id)
+	if err != nil {
+		return err
+	}
+	meta.DurationSeconds = durationSeconds
+	return fs.writeMeta(meta)
+}
+
 func removeIfExists(path string) error {
 	err := os.Remove(path)
 	if err != nil && !os.IsNotExist(err) {

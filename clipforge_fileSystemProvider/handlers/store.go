@@ -1,10 +1,13 @@
 package handlers
 
 import (
+	"encoding/json"
 	"fmt"
 	"mime"
 	"mime/multipart"
 	"net/http"
+	"os/exec"
+	"strconv"
 
 	"clipforge-filesystemprovider/storage"
 )
@@ -62,6 +65,13 @@ func Store(fs *storage.FileSystem) http.HandlerFunc {
 
 				part.Close()
 
+				// Best-effort: probe duration and persist in metadata.
+				if filePath, err := fs.VideoFilePath(id); err == nil {
+					if d, err := probeDuration(filePath); err == nil {
+						fs.SetDuration(id, d)
+					}
+				}
+
 				w.WriteHeader(http.StatusOK)
 				fmt.Fprintln(w, "stored")
 				return
@@ -76,4 +86,34 @@ func readSmallPart(p *multipart.Part) string {
 	buf := make([]byte, 512)
 	n, _ := p.Read(buf)
 	return string(buf[:n])
+}
+
+// probeDuration runs ffprobe to extract the video duration in seconds.
+// Returns an error if ffprobe is unavailable or the duration cannot be parsed.
+func probeDuration(filePath string) (float64, error) {
+	out, err := exec.Command(
+		"ffprobe",
+		"-v", "quiet",
+		"-print_format", "json",
+		"-show_entries", "format=duration",
+		filePath,
+	).Output()
+	if err != nil {
+		return 0, fmt.Errorf("ffprobe: %w", err)
+	}
+
+	var result struct {
+		Format struct {
+			Duration string `json:"duration"`
+		} `json:"format"`
+	}
+	if err := json.Unmarshal(out, &result); err != nil {
+		return 0, fmt.Errorf("parse ffprobe output: %w", err)
+	}
+
+	seconds, err := strconv.ParseFloat(result.Format.Duration, 64)
+	if err != nil {
+		return 0, fmt.Errorf("parse duration %q: %w", result.Format.Duration, err)
+	}
+	return seconds, nil
 }

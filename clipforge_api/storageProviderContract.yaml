@@ -156,6 +156,40 @@ paths:
         "500":
           description: Deletion failure
 
+  /thumbnail/{id}:
+    get:
+      tags: [Storage]
+      summary: Get the first-frame thumbnail of a video
+      description: |
+        Returns the first frame of the specified video as a JPEG image.
+
+        Requires `ffmpeg` to be available on the storage provider's PATH.
+        Returns `503 Service Unavailable` if thumbnail generation fails
+        (e.g. ffmpeg not installed or video is unreadable).
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          example: "vid_01j8k2n4p5q6r7s8t9"
+      responses:
+        "200":
+          description: JPEG thumbnail of the first video frame
+          content:
+            image/jpeg:
+              schema:
+                type: string
+                format: binary
+        "400":
+          description: Missing or empty ID
+        "404":
+          description: Video not found
+        "500":
+          description: Thumbnail generation failed (e.g. ffmpeg error)
+        "405":
+          description: Method not allowed
+
   /list/{accountId}:
     get:
       tags: [Storage]
@@ -189,9 +223,11 @@ paths:
                   - id: "vid_01j8k2n4p5q6r7s8t9"
                     createdAt: "2024-11-01T10:30:00Z"
                     fileName: "holiday-2024.mp4"
+                    durationSeconds: 45.2
                   - id: "vid_02j9l3o5q6r7s8t9u0"
                     createdAt: "2024-11-03T14:15:00Z"
                     fileName: "birthday.mp4"
+                    durationSeconds: 128.0
         "500":
           description: Listing failure
 
@@ -199,7 +235,7 @@ components:
   schemas:
     VideoEntry:
       type: object
-      required: [id, createdAt, fileName]
+      required: [id, createdAt, fileName, durationSeconds]
       properties:
         id:
           type: string
@@ -214,3 +250,10 @@ components:
           type: string
           description: Original filename as provided during /store
           example: "holiday-2024.mp4"
+        durationSeconds:
+          type: number
+          format: double
+          description: |
+            Duration of the video in seconds, extracted via ffprobe at store time.
+            Will be 0 if ffprobe was unavailable or the duration could not be parsed.
+          example: 45.2
