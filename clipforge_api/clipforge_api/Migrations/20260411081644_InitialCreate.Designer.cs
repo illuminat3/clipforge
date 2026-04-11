@@ -12,7 +12,7 @@ using clipforge_api.Data;
 namespace clipforge_api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260411061156_InitialCreate")]
+    [Migration("20260411081644_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -71,6 +71,9 @@ namespace clipforge_api.Migrations
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
+
+                    b.Property<int>("lengthMs")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
