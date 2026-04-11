@@ -46,7 +46,8 @@ namespace clipforge_api.Clip.PublishClip
                 Title = request.Title,
                 UserId = userId,
                 CreatedAt = DateTime.UtcNow,
-                lengthMs = await GetLengthForClip(request.File, cancellationToken)
+                lengthMs = await GetLengthForClip(request.File, cancellationToken),
+                SizeBytes = request.File.Length
             };
 
             db.Clips.Add(clip);
