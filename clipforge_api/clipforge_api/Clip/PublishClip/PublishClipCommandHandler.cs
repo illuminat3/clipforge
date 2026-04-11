@@ -32,15 +32,17 @@ namespace clipforge_api.Clip.PublishClip
 
             using var formContent = new MultipartFormDataContent();
 
+            // id and accountId must appear before the file part (storage provider reads parts sequentially)
+            formContent.Add(new StringContent(clipId.ToString()), "id");
+            formContent.Add(new StringContent(userId.ToString()), "accountId");
+            formContent.Add(new StringContent(request.File.FileName), "fileName");
+
             var fileStream = request.File.OpenReadStream();
             var fileContent = new StreamContent(fileStream);
             fileContent.Headers.ContentType = new MediaTypeHeaderValue(
                 string.IsNullOrEmpty(request.File.ContentType) ? "video/mp4" : request.File.ContentType);
 
             formContent.Add(fileContent, "file", request.File.FileName);
-            formContent.Add(new StringContent(clipId.ToString()), "id");
-            formContent.Add(new StringContent(userId.ToString()), "accountId");
-            formContent.Add(new StringContent(request.File.FileName), "fileName");
 
             var storageResponse = await httpClient.PostAsync("/store", formContent, ct);
             storageResponse.EnsureSuccessStatusCode();
