@@ -10,15 +10,17 @@ Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.Limits.MaxRequestBodySize = 1L * 1024 * 1024 * 1024;
+});
+
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
-
 builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
-
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
-
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddHttpClient("StorageProvider", client =>
@@ -26,7 +28,6 @@ builder.Services.AddHttpClient("StorageProvider", client =>
     var url = builder.Configuration["StorageProvider:Url"] ?? "http://localhost:8080";
     client.BaseAddress = new Uri(url);
 });
-
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -55,7 +56,5 @@ if (app.Environment.IsDevelopment())
 
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();
