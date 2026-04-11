@@ -20,7 +20,7 @@ namespace clipforge_api.Clip.ListClip
             var authUserId = Guid.Parse(userIdClaim);
             var userId = (request.UserId != null) ? Guid.Parse(request.UserId) : authUserId;
 
-            var userClips = await db.UserClips.Where(uc => uc.UserId == userId).ToListAsync(cancellationToken);          
+            var userClips = await db.UserClips.Include(uc => uc.Clip).Where(uc => uc.UserId == userId).ToListAsync(cancellationToken);
 
             var clips = userClips.Select(uc => new ClipListItem(
                    ClipId: uc.ClipId,
