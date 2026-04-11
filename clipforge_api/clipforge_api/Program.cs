@@ -20,6 +20,12 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddHttpClient("StorageProvider", client =>
+{
+    var url = builder.Configuration["StorageProvider:Url"] ?? "http://localhost:8080";
+    client.BaseAddress = new Uri(url);
+});
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
