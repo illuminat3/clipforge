@@ -136,6 +136,41 @@ paths:
         "404":
           description: Video not found
 
+  /thumbnail/{id}:
+    get:
+      tags: [Storage]
+      summary: Fetch a video thumbnail
+      description: |
+        Returns the thumbnail image for the given video ID.
+        The thumbnail is a JPEG of the first frame of the video, generated
+        once at store time. Returns 404 if the video does not exist or
+        thumbnail generation failed.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          example: "vid_01j8k2n4p5q6r7s8t9"
+      responses:
+        "200":
+          description: Thumbnail image
+          headers:
+            Content-Length:
+              schema:
+                type: integer
+            Content-Type:
+              schema:
+                type: string
+                example: image/jpeg
+          content:
+            image/jpeg:
+              schema:
+                type: string
+                format: binary
+        "404":
+          description: Video or thumbnail not found
+
   /delete/{id}:
     delete:
       tags: [Storage]

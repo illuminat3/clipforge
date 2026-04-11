@@ -14,6 +14,7 @@ func NewRouter(fs *storage.FileSystem) *http.ServeMux {
 	mux.HandleFunc("/fetch/", handlers.Fetch(fs))
 	mux.HandleFunc("/delete/", handlers.Delete(fs))
 	mux.HandleFunc("/list/", handlers.List(fs))
+	mux.HandleFunc("/thumbnail/", handlers.Thumbnail(fs))
 
 	return mux
 }
