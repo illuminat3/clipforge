@@ -2,6 +2,7 @@
 using clipforge_api.Clip.ListClip;
 using clipforge_api.Clip.PublishClip;
 using clipforge_api.Clip.StreamClip;
+using clipforge_api.Clip.ThumbnailClip;
 using clipforge_api.Core;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -40,6 +41,14 @@ namespace clipforge_api.Clip
         public async Task<IActionResult> StreamClip(string id, [FromQuery] string? rangeHeader)
         {
             var query = new StreamClipQuery(id, rangeHeader);
+            var result = await Mediator.Send(query);
+            return result;
+        }
+
+        [HttpGet("{id}/thumbnail")]
+        public async Task<IActionResult> GetThumbnail(string id)
+        {
+            var query = new ThumbnailClipQuery(id);
             var result = await Mediator.Send(query);
             return result;
         }
