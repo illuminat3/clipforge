@@ -1,4 +1,5 @@
-﻿using clipforge_api.Clip.GetClip;
+﻿using clipforge_api.Clip.DeleteClip;
+using clipforge_api.Clip.GetClip;
 using clipforge_api.Clip.ListClip;
 using clipforge_api.Clip.PublishClip;
 using clipforge_api.Clip.StreamClip;
@@ -51,6 +52,14 @@ namespace clipforge_api.Clip
             var query = new ThumbnailClipQuery(id);
             var result = await Mediator.Send(query);
             return result;
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteClip(string id)
+        {
+            var command = new DeleteClipCommand(id);
+            await Mediator.Send(command);
+            return NoContent();
         }
     }
 }
