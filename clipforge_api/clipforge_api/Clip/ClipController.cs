@@ -1,17 +1,21 @@
-﻿using clipforge_api.Clip.GetClip;
+﻿using clipforge_api.Clip.DeleteClip;
+using clipforge_api.Clip.GetClip;
 using clipforge_api.Clip.ListClip;
 using clipforge_api.Clip.PublishClip;
 using clipforge_api.Clip.StreamClip;
+using clipforge_api.Clip.ThumbnailClip;
 using clipforge_api.Core;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace clipforge_api.Clip
 {
 
     [Route("clip")]
-    public class ClipController(IMediator mediator) : RequiredAuthController(mediator)
+    public class ClipController(IMediator mediator) : ApiController(mediator)
     {
+        [Authorize]
         [HttpPost("publish")]
         public async Task<IActionResult> Publish([FromForm] PublishClipCommand command)
         {
@@ -27,6 +31,14 @@ namespace clipforge_api.Clip
             return Ok(result);
         }
 
+        [Authorize]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteClip(string id)
+        {
+            var command = new DeleteClipCommand(id);
+            await Mediator.Send(command);
+            return NoContent();
+        }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetClip(string id)
@@ -40,6 +52,14 @@ namespace clipforge_api.Clip
         public async Task<IActionResult> StreamClip(string id, [FromQuery] string? rangeHeader)
         {
             var query = new StreamClipQuery(id, rangeHeader);
+            var result = await Mediator.Send(query);
+            return result;
+        }
+
+        [HttpGet("{id}/thumbnail")]
+        public async Task<IActionResult> GetThumbnail(string id)
+        {
+            var query = new ThumbnailClipQuery(id);
             var result = await Mediator.Send(query);
             return result;
         }

@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"time"
 )
@@ -53,7 +54,41 @@ func (fs *FileSystem) Store(id, accountID, fileName string, r io.Reader) error {
 		FileName:  fileName,
 		CreatedAt: time.Now().UTC(),
 	}
-	return fs.writeMeta(meta)
+	if err := fs.writeMeta(meta); err != nil {
+		return err
+	}
+
+	_ = fs.generateThumbnail(accountID, id, fs.videoPath(accountID, id))
+	return nil
+}
+
+func (fs *FileSystem) generateThumbnail(accountID, id, videoPath string) error {
+	thumbPath := fs.thumbnailPath(accountID, id)
+	cmd := exec.Command("ffmpeg", "-y", "-i", videoPath, "-vframes", "1", "-q:v", "2", "-f", "image2", thumbPath)
+	if out, err := cmd.CombinedOutput(); err != nil {
+		return fmt.Errorf("ffmpeg thumbnail generation failed: %w: %s", err, out)
+	}
+	return nil
+}
+
+func (fs *FileSystem) OpenThumbnail(id string) (*os.File, int64, error) {
+	meta, err := fs.FindMeta(id)
+	if err != nil {
+		return nil, 0, err
+	}
+
+	f, err := os.Open(fs.thumbnailPath(meta.AccountID, id))
+	if err != nil {
+		return nil, 0, fmt.Errorf("open thumbnail: %w", err)
+	}
+
+	stat, err := f.Stat()
+	if err != nil {
+		f.Close()
+		return nil, 0, fmt.Errorf("stat thumbnail: %w", err)
+	}
+
+	return f, stat.Size(), nil
 }
 
 func (fs *FileSystem) Open(id string) (*os.File, int64, error) {
@@ -145,6 +180,8 @@ func (fs *FileSystem) Delete(id string) error {
 		return fmt.Errorf("delete metadata: %w", err)
 	}
 
+	_ = removeIfExists(fs.thumbnailPath(meta.AccountID, id))
+
 	return nil
 }
 
@@ -158,6 +195,10 @@ func (fs *FileSystem) videoPath(accountID, id string) string {
 
 func (fs *FileSystem) metaPath(accountID, id string) string {
 	return filepath.Join(fs.accountDir(accountID), id+".json")
+}
+
+func (fs *FileSystem) thumbnailPath(accountID, id string) string {
+	return filepath.Join(fs.accountDir(accountID), id+".thumb.jpg")
 }
 
 func (fs *FileSystem) writeMeta(meta VideoMeta) error {
