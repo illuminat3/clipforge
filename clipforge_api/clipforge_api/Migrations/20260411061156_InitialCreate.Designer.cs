@@ -12,7 +12,7 @@ using clipforge_api.Data;
 namespace clipforge_api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260409232317_InitialCreate")]
+    [Migration("20260411061156_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
