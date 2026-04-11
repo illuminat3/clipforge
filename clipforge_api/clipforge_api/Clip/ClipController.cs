@@ -63,13 +63,5 @@ namespace clipforge_api.Clip
             var result = await Mediator.Send(query);
             return result;
         }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteClip(string id)
-        {
-            var command = new DeleteClipCommand(id);
-            await Mediator.Send(command);
-            return NoContent();
-        }
     }
 }
